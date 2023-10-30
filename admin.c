@@ -82,7 +82,7 @@ void admin()
         if (ch1 == 1)
         {
             int ch;
-            printf("1. Vehicle details\n2. Driver details\n3. Oreder details\n");
+            printf("1. Vehicle details\n2. Driver details\n3. Order details\n");
             printf("Enter choice : ");
             scanf("%d", &ch);
             system("cls");
@@ -158,20 +158,39 @@ void admin()
                         {
                             printf("%s\n", viewVehicle.vehicleNumber);
                         }
+                        fclose(fp);
+                        printf("Enter vehicle number from list: ");
+                        fgets(add_d.curr_veh.vehicleNumber, 20, stdin);
+                        remove_endline(add_d.curr_veh.vehicleNumber);
+                        int chck = 0;
+                        fp = fopen("vehicle_details.csv", "r");
+                        while (fscanf(fp, "%19[^\n]\n", viewVehicle.vehicleNumber) != EOF)
+                        {
+
+                            if (strcmp(viewVehicle.vehicleNumber, add_d.curr_veh.vehicleNumber) == 0)
+                            {
+                                chck = 1;
+                                break;
+                            }
+                        }
+                        if (chck == 0)
+                        {
+                            printf("Vehicle not in list\n");
+                        }
+
+                        else
+                        {
+
+                            // Write the details to the CSV file
+                            fprintf(file, "%s|%s\n", add_d.name, add_d.curr_veh.vehicleNumber);
+
+                            // Close the file
+                            fclose(file);
+                            system("cls");
+                            loading();
+                            printf("Driver details added to the CSV file.\n");
+                        }
                     }
-                    printf("Enter vehicle number from list: ");
-                    fgets(add_d.curr_veh.vehicleNumber, 20, stdin);
-
-                    remove_endline(add_d.curr_veh.vehicleNumber);
-
-                    // Write the details to the CSV file
-                    fprintf(file, "%s|%s\n", add_d.name, add_d.curr_veh.vehicleNumber);
-
-                    // Close the file
-                    fclose(file);
-                    system("cls");
-                    loading();
-                    printf("Driver details added to the CSV file.\n");
                 }
                 printf("Press enter to continue");
                 scanf("%c", &k);
