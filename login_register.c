@@ -30,7 +30,7 @@ void reg()
             printf("\t\t\t\tCan't open file.\n");
             return;
         }
-        system("cls");
+        system("clear");
         fprintf(cfile, "%s|%s|%s\n", add_c.name, add_c.clogin.id, add_c.clogin.pass); // add record to database
         printf("\n\t\t\t\tPlease wait while we create your account");
         for (int i = 0; i <= 6; i++)
