@@ -338,3 +338,7 @@ void admin()
         scanf("%hi", &x);
     }
 }
+
+int main(){
+    admin();
+}
