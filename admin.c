@@ -215,7 +215,8 @@ void admin()
                 break;
 
             default:
-                printf("Wrong choice...");
+                clear_leftover();
+                printf("Wrong choice...\n");
                 printf("Press enter to continue");
                 scanf("%c", &k);
                 break;
@@ -301,8 +302,8 @@ void admin()
                 break;
 
             default:
-                printf("Wrong choice...");
-                char k;
+                printf("Wrong choice...\n");
+                clear_leftover();
                 printf("Press any enter to continue");
                 scanf("%c", &k);
                 break;
