@@ -70,6 +70,7 @@ void loading(void)
 
 void admin()
 {
+    char k;
     short x = 1;
     while (x == 1)
     {
@@ -97,9 +98,6 @@ void admin()
                 if (file == NULL)
                 {
                     printf("Error opening the file.\n");
-                    char k;
-                    printf("Press any enter to continue:");
-                    scanf("%c", &k);
                 }
                 else
                 {
@@ -121,11 +119,9 @@ void admin()
                     system("cls");
                     loading();
                     printf("Vehicle details added to the CSV file.\n");
-                    char k;
-                    printf("Press any enter to continue:");
-                    scanf("%c", &k);
                 }
-
+                printf("Press enter to continue");
+                scanf("%c", &k);
                 break;
             case 2:
                 // Open the CSV file in append mode
@@ -134,9 +130,6 @@ void admin()
                 if (file == NULL)
                 {
                     printf("Error opening the file.\n");
-                    char k;
-                    printf("Press any enter to continue:");
-                    scanf("%c", &k);
                 }
                 else
                 {
@@ -154,9 +147,6 @@ void admin()
                     if (fp == NULL)
                     {
                         printf("Error opening the file.\n");
-                        char k;
-                        printf("Press any enter to continue:");
-                        scanf("%c", &k);
                     }
 
                     else
@@ -182,11 +172,9 @@ void admin()
                     system("cls");
                     loading();
                     printf("Driver details added to the CSV file.\n");
-                    char k;
-                    printf("Press any enter to continue:");
-                    scanf("%c", &k);
                 }
-
+                printf("Press enter to continue");
+                scanf("%c", &k);
                 break;
             case 3:
                 // Open the CSV file in append mode
@@ -195,9 +183,6 @@ void admin()
                 if (file == NULL)
                 {
                     printf("Error opening the file.\n");
-                    char k;
-                    printf("Press any enter to continue:");
-                    scanf("%c", &k);
                 }
                 else
                 {
@@ -224,15 +209,15 @@ void admin()
                     system("cls");
                     loading();
                     printf("Order details added to the CSV file.\n");
-                    char k;
-                    printf("Press any enter to continue:");
-                    scanf("%c", &k);
                 }
-
+                printf("Press enter to continue");
+                scanf("%c", &k);
                 break;
 
             default:
                 printf("Wrong choice...");
+                printf("Press enter to continue");
+                scanf("%c", &k);
                 break;
             }
         }
@@ -254,9 +239,6 @@ void admin()
                 if (fp == NULL)
                 {
                     printf("Error opening the file.\n");
-                    char k;
-                    printf("Press any enter to continue:");
-                    scanf("%c", &k);
                 }
 
                 else
@@ -269,7 +251,9 @@ void admin()
                         printf("%s\n", viewVehicle.vehicleNumber);
                     }
                 }
-
+                clear_leftover();
+                printf("Press enter to continue");
+                scanf("%c", &k);
                 break;
             case 2:
                 fp = fopen("driver_details.csv", "r");
@@ -289,6 +273,9 @@ void admin()
                         printf("%-15s\t%12s\n", read_d.name, read_d.curr_veh.vehicleNumber);
                     }
                 }
+                clear_leftover();
+                printf("Press enter to continue");
+                scanf("%c", &k);
                 break;
             case 3:
                 fp = fopen("order_details.csv", "r");
@@ -296,9 +283,6 @@ void admin()
                 if (fp == NULL)
                 {
                     printf("Error opening the file.\n");
-                    char k;
-                    printf("Press any enter to continue:");
-                    scanf("%c", &k);
                 }
 
                 else
@@ -311,16 +295,20 @@ void admin()
                         printf("%-10s\t%-19s\t%s\n", read_o.cus.name, read_o.pick_loc, read_o.del_dest);
                     }
                 }
+                clear_leftover();
+                printf("Press enter to continue");
+                scanf("%c", &k);
                 break;
 
             default:
                 printf("Wrong choice...");
                 char k;
-                printf("Press any enter to continue:");
+                printf("Press any enter to continue");
                 scanf("%c", &k);
                 break;
             }
         }
+        system("cls");
         printf("Press 0 to exit and 1 to continue: ");
         scanf("%hi", &x);
     }
