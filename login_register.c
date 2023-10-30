@@ -3,6 +3,7 @@
 #include <conio.h>
 #include <stdlib.h>
 #include "structure.h"
+#include "loading.h"
 #define ID_PASS_MAX 20
 
 int pass_attempts = 3;
@@ -33,7 +34,7 @@ void reg()
         system("cls");
         fprintf(cfile, "%s|%s|%s\n", add_c.name, add_c.clogin.id, add_c.clogin.pass); // add record to database
         printf("\n\t\t\t\tPlease wait while we create your account");
-        for (int i = 0; i < 6; i++)
+        for (int i = 0; i <= 6; i++)
         {
             printf(".");
             usleep(125000);
@@ -62,7 +63,7 @@ void reg()
         system("cls");
         fprintf(dfile, "%s|%s|%s\n", add_d.name, add_d.dlogin.id, add_d.dlogin.pass); // add record to database
         printf("\n\t\t\t\tPlease wait while we create your account");
-        for (int i = 0; i < 6; i++)
+        for (int i = 0; i <= 6; i++)
         {
             printf(".");
             usleep(125000);
@@ -100,15 +101,10 @@ void loginf()
                     scanf("%s", check_c.clogin.pass);
                     pass_attempts--;
                     system("cls");
-                    if (strcmp(add_c.clogin.pass, check_c.clogin.pass)==0)
+                    if (strcmp(add_c.clogin.pass, check_c.clogin.pass) == 0)
                     {
                         printf("Loading");
-                        for (int i = 0; i <= 6; i++)
-                        {
-                            printf(".");
-                            usleep(125000);
-                        }
-                        system("cls");
+                        loading();
                         printf("Under construction.");
                         fclose(cfile);
                     }
@@ -145,15 +141,10 @@ void loginf()
                     scanf("%s", check_d.dlogin.pass);
                     pass_attempts--;
                     system("cls");
-                    if (strcmp(add_d.dlogin.pass, check_d.dlogin.pass)==0)
+                    if (strcmp(add_d.dlogin.pass, check_d.dlogin.pass) == 0)
                     {
                         printf("Loading");
-                        for (int i = 0; i <= 6; i++)
-                        {
-                            printf(".");
-                            usleep(125000);
-                        }
-                        system("cls");
+                        loading();
                         printf("Under construction.");
                         fclose(dfile);
                     }
