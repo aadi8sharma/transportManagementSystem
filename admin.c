@@ -12,10 +12,10 @@
 
 void remove_endline(char a[])
 {
-    size_t len = strlen(newVehicle.vehicleNumber);
-    if (len > 0 && newVehicle.vehicleNumber[len - 1] == '\n')
+    size_t len = strlen(a);
+    if (len > 0 && a[len - 1] == '\n')
     {
-        newVehicle.vehicleNumber[len - 1] = '\0';
+        a[len - 1] = '\0';
     }
 }
 
