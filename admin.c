@@ -268,9 +268,6 @@ void admin()
                     {
                         printf("%s\n", viewVehicle.vehicleNumber);
                     }
-                    char k;
-                    printf("Press any enter to continue:");
-                    scanf("%c", &k);
                 }
 
                 break;
@@ -280,23 +277,17 @@ void admin()
                 if (fp == NULL)
                 {
                     printf("Error opening the file.\n");
-                    char k;
-                    printf("Press any enter to continue:");
-                    scanf("%c", &k);
                 }
 
                 else
                 {
-                    printf("Driver name\tCurrent Vehicle\n");
+                    printf("Driver name\t\tCurrent Vehicle\n");
 
                     // Read and print each line from the CSV file
                     while (fscanf(fp, "%99[^|]|%19[^\n]\n", read_d.name, read_d.curr_veh.vehicleNumber) != EOF)
                     {
-                        printf("%s\t%13s\n", read_d.name, read_d.curr_veh.vehicleNumber);
+                        printf("%-15s\t%12s\n", read_d.name, read_d.curr_veh.vehicleNumber);
                     }
-                    char k;
-                    printf("Press any enter to continue:");
-                    scanf("%c", &k);
                 }
                 break;
             case 3:
@@ -319,9 +310,6 @@ void admin()
                     {
                         printf("%-10s\t%-19s\t%s\n", read_o.cus.name, read_o.pick_loc, read_o.del_dest);
                     }
-                    char k;
-                    printf("Press any enter to continue:");
-                    scanf("%c", &k);
                 }
                 break;
 
@@ -333,12 +321,12 @@ void admin()
                 break;
             }
         }
-        system("cls");
         printf("Press 0 to exit and 1 to continue: ");
         scanf("%hi", &x);
     }
 }
 
-int main(){
+int main()
+{
     admin();
 }
