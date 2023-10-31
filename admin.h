@@ -341,7 +341,7 @@ void admin()
             printf("\t\t\t\tEnter choice :\n\t\t\t\t>>>");
             scanf("%d", &ch);
             system("cls");
-            FILE *fp;
+            FILE *fp, *file;
             switch (ch)
             {
             case 1:
@@ -390,9 +390,9 @@ void admin()
                 }
                 break;
             case 2:
-                fp = fopen("order_details.csv", "r");
+                file = fopen("driver_details.csv", "r");
 
-                if (fp == NULL)
+                if (file == NULL)
                 {
                     printf("\t\t\t\tError opening the file.\n");
                 }
@@ -406,7 +406,7 @@ void admin()
                     {
                         printf("%-10s\t%-19s\t%s\n", read_o.cus.name, read_o.pick_loc, read_o.del_dest);
                     }
-                    fclose(fp);
+                    fclose(file);
 
                     clear_leftover();
                     printf("Enter driver name to be deleted: ");
@@ -422,6 +422,7 @@ void admin()
                             break;
                         }
                     }
+                    fclose(fp);
                     if (chck == 0)
                     {
                         printf("\t\t\t\tDriver not in list\n");
@@ -431,7 +432,7 @@ void admin()
                         delDriver("driver_details", del_d.name);
                         printf("Successfully deleted");
                     }
-                }
+                                }
                 clear_leftover();
                 printf("\t\t\t\tPress enter to continue");
                 scanf("%c", &k);
