@@ -117,8 +117,14 @@ void loginf()
                 }
                 else
                 {
-                    printf("Acount locked");
-                    return;
+                    for(int i = 60; i > 0; i--)
+                    {
+                        printf("Account temporarily disabled, wait for %d seconds", i);
+                        usleep(1000000);
+                        system("cls");
+                    }
+                    pass_attempts = 3;
+                    goto tryPass_C;
                 }
             }
         }
@@ -157,8 +163,14 @@ void loginf()
                 }
                 else
                 {
-                    printf("Acount locked");
-                    return;
+                    for(int i = 60; i > 0; i--)
+                    {
+                        printf("Account temporarily disables, wait for %d seconds", i);
+                        usleep(1000000);
+                        system("cls");
+                    }
+                    pass_attempts = 3;
+                    goto tryPass_D;
                 }
             }
         }
@@ -167,6 +179,53 @@ void loginf()
 
 int main()
 {
-    reg();
+    system("cls");
+    int ab = 0;
+    printf("\t\t\t\t\t\tTRANSPORT MANAGEMENT SYSTEM\n\n");
+    printf("\t\t\t\t(1)Log In\n\n\t\t\t\t(2)Sign Up\n\n\t\t\t\t(3)About\n\n\t\t\t\t");
+strt:
+    scanf("%d", &ab);
+    switch (ab)
+    {
+    case 1:
+    {
+        loginf();
+        break;
+    }
+
+    case 2:
+    {
+        reg();
+        break;
+    }
+    case 3:
+    {
+        char credits[1000] = "EndSem Project |Aaditya Sharma |Unmilan Das |Pathya Taya |Swastik Mantri |Suvansh Sharma";
+        int key = 0;
+        while (credits[key] != '\0')
+        {
+            if (credits[key] == '|')
+            {
+                printf("\n");
+            }
+            else
+            {
+                printf("%c", credits[key]);
+            }
+            fflush(stdout);
+            key++;
+            usleep(40000);
+        }
+
+        break;
+    }
+    default:
+    {
+        printf("INVALID CHOICE");
+        goto strt;
+        break;
+    }
+    }
+
     return 0;
 }
