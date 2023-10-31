@@ -429,8 +429,13 @@ void admin()
                     else
                     {
                         delDriver("driver_details", del_d.name);
+                        printf("Successfully deleted");
                     }
                 }
+                clear_leftover();
+                printf("\t\t\t\tPress enter to continue");
+                scanf("%c", &k);
+                break;
             default:
                 break;
             }
