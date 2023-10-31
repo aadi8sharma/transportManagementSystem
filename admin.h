@@ -346,7 +346,7 @@ void admin()
             switch (ch)
             {
             case 1:
-                fp = fopen("order_details.csv", "r");
+                fp = fopen("vehicle_details.csv", "r");
 
                 if (fp == NULL)
                 {
@@ -355,16 +355,18 @@ void admin()
 
                 else
                 {
-                    printf("Customer name\tPick up location\tDelivery destination\n");
+                    printf("Vehicle Number\n");
 
                     // Read and print each line from the CSV file
-                    while (fscanf(fp, "%99[^|]|%99[^|]|%99[^\n]\n", read_o.cus.name, read_o.pick_loc, read_o.del_dest) != EOF)
+                    while (fscanf(fp, "%19[^|]\n", viewVehicle.vehicleNumber) != EOF)
                     {
-                        printf("%-10s\t%-19s\t%s\n", read_o.cus.name, read_o.pick_loc, read_o.del_dest);
+                        printf("%s\n", viewVehicle.vehicleNumber);
                     }
+
                     fclose(fp);
 
                     clear_leftover();
+                    printf("Enter vehicle number of the vehicle to be deleted: ");
                     fgets(delVehicle.vehicleNumber, 20, stdin);
                     remove_endline(delVehicle.vehicleNumber);
                     int chck = 0;
