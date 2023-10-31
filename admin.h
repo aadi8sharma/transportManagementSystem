@@ -506,6 +506,10 @@ void admin()
                 break;
             }
         }
+        else
+        {
+            printf("INVALID CHOICE");
+        }
 
         system("cls");
         printf("\t\t\t\tPress 0 to exit and 1 to continue: ");
