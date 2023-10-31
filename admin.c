@@ -75,15 +75,15 @@ void admin()
     while (x == 1)
     {
         int ch1;
-        printf("1. Add record\n2. View record\n3. Delete record\n");
-        printf("Enter choice : ");
+        printf("\t\t\t\t1. Add record\n\t\t\t\t2. View record\n\t\t\t\t3. Delete record\n");
+        printf("\t\t\t\tEnter choice : ");
         scanf("%d", &ch1);
         system("cls");
         if (ch1 == 1)
         {
             int ch;
-            printf("1. Vehicle details\n2. Driver details\n3. Order details\n");
-            printf("Enter choice : ");
+            printf("\t\t\t\t1. Vehicle details\n\t\t\t\t2. Driver details\n\t\t\t\t3. Order details\n");
+            printf("\t\t\t\tEnter choice : ");
             scanf("%d", &ch);
             system("cls");
             FILE *file, *fp;
@@ -97,7 +97,7 @@ void admin()
 
                 if (file == NULL)
                 {
-                    printf("Error opening the file.\n");
+                    printf("\t\t\t\tError opening the file.\n");
                 }
                 else
                 {
@@ -105,7 +105,7 @@ void admin()
                     clear_leftover();
 
                     // Input vehicle details from the user
-                    printf("Enter Vehicle Number: ");
+                    printf("\t\t\t\tEnter Vehicle Number: ");
                     fgets(newVehicle.vehicleNumber, 20, stdin);
 
                     // Remove the trailing newline from the input
@@ -118,9 +118,9 @@ void admin()
                     fclose(file);
                     system("cls");
                     loading();
-                    printf("Vehicle details added to the CSV file.\n");
+                    printf("\t\t\t\tVehicle details added to the CSV file.\n");
                 }
-                printf("Press enter to continue");
+                printf("\t\t\t\tPress enter to continue");
                 scanf("%c", &k);
                 break;
             case 2:
@@ -129,7 +129,7 @@ void admin()
 
                 if (file == NULL)
                 {
-                    printf("Error opening the file.\n");
+                    printf("\t\t\t\tError opening the file.\n");
                 }
                 else
                 {
@@ -139,14 +139,14 @@ void admin()
                     clear_leftover();
 
                     // Input driver details from the user
-                    printf("Enter Driver's name: ");
+                    printf("\t\t\t\tEnter Driver's name: ");
                     fgets(add_d.name, 50, stdin);
 
                     remove_endline(add_d.name);
 
                     if (fp == NULL)
                     {
-                        printf("Error opening the file.\n");
+                        printf("\t\t\t\tError opening the file.\n");
                     }
 
                     else
@@ -159,7 +159,7 @@ void admin()
                             printf("%s\n", viewVehicle.vehicleNumber);
                         }
                         fclose(fp);
-                        printf("Enter vehicle number from list: ");
+                        printf("\t\t\t\tEnter vehicle number from list: ");
                         fgets(add_d.curr_veh.vehicleNumber, 20, stdin);
                         remove_endline(add_d.curr_veh.vehicleNumber);
                         int chck = 0;
@@ -175,7 +175,7 @@ void admin()
                         }
                         if (chck == 0)
                         {
-                            printf("Vehicle not in list\n");
+                            printf("\n\t\t\t\tVehicle not in list\n");
                         }
 
                         else
@@ -188,11 +188,11 @@ void admin()
                             fclose(file);
                             system("cls");
                             loading();
-                            printf("Driver details added to the CSV file.\n");
+                            printf("\t\t\t\tDriver details added to the CSV file.\n");
                         }
                     }
                 }
-                printf("Press enter to continue");
+                printf("\t\t\t\tPress enter to continue");
                 scanf("%c", &k);
                 break;
             case 3:
@@ -328,6 +328,11 @@ void admin()
                 break;
             }
         }
+        if (ch1 == 3)
+        {
+            /* code */
+        }
+
         system("cls");
         printf("Press 0 to exit and 1 to continue: ");
         scanf("%hi", &x);
