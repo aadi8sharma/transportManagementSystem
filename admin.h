@@ -409,7 +409,7 @@ void admin()
                     printf("Vehicle Number\n");
 
                     // Read and print each line from the CSV file
-                    while (fscanf(file, "%19[^|]\n", viewVehicle.vehicleNumber) != EOF)
+                    while (fscanf(file, "%19[^\n]\n", viewVehicle.vehicleNumber) != EOF)
                     {
                         printf("%s\n", viewVehicle.vehicleNumber);
                     }
@@ -424,7 +424,7 @@ void admin()
                     fp = fopen("vehicle_details.csv", "r");
                     while (fscanf(fp, "%19[^\n]\n", viewVehicle.vehicleNumber) != EOF)
                     {
-                        if (strcmp(viewVehicle.vehicleNumber, add_d.curr_veh.vehicleNumber) == 0)
+                        if (strcmp(viewVehicle.vehicleNumber, delVehicle.vehicleNumber) == 0)
                         {
                             chck = 1;
                             break;
@@ -441,6 +441,9 @@ void admin()
                         printf("\t\t\t\tRecord has been deleted");
                     }
                 }
+                clear_leftover();
+                printf("\t\t\t\tPress enter to continue");
+                scanf("%c", &k);
                 break;
             case 2:
 
