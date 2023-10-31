@@ -87,7 +87,7 @@ void del_v(const char *filename, const char *vehicleNumberToDelete)
     char vehicleNumber[100]; // Adjust buffer size based on the expected vehicle number length
     int found = 0;
 
-    while (fscanf(inputFile, " %99[^|\n]\n", vehicleNumber) != EOF)
+    while (fscanf(inputFile, " %19[^\n]\n", vehicleNumber) != EOF)
     {
         if (strcmp(vehicleNumber, vehicleNumberToDelete) == 0)
         {
