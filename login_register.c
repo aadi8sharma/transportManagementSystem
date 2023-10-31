@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include "structure.h"
-#include "loading.h"
+#include "admin.h"
+#include "admin_login_details.h"
 #define ID_PASS_MAX 20
 
 void reg()
@@ -231,10 +231,10 @@ strt:
             printf("\t\t\t\t\t\t\tADMIN LOG IN");
             printf("\n\n\t\t\t\tEnter key: ");
             scanf("%s", admin_key);
-            if (admin_key == "control@admin12345")
+            if (strcmp(admin_key, ADMIN_PASS) == 0)
             {
                 loading();
-                printf("Under construction");
+                admin();
             }
             else
             {

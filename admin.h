@@ -23,6 +23,7 @@ void clear_leftover()
 
 void admin()
 {
+    system("cls");
     char k;
     short x = 1;
     while (x == 1)
@@ -290,9 +291,4 @@ void admin()
         printf("\t\t\t\tPress 0 to exit and 1 to continue: ");
         scanf("%hi", &x);
     }
-}
-
-int main()
-{
-    admin();
 }
