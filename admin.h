@@ -390,6 +390,7 @@ void admin()
                 }
                 break;
             case 2:
+                const char *filename = "driver_details.csv";
                 file = fopen("driver_details.csv", "r");
 
                 if (file == NULL)
@@ -429,7 +430,7 @@ void admin()
                     }
                     else
                     {
-                        delDriver(&"driver_details", del_d.name);
+                        delDriver(filename, del_d.name);
                         printf("Successfully deleted");
                     }
                 }
