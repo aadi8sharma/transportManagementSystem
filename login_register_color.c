@@ -8,7 +8,8 @@ int rerun=0;
 
 
 void reg()
-{  loading();
+{  
+    loading();
 
    rereg:
    system("clear");
@@ -24,6 +25,7 @@ void reg()
     if (choice == 1)
     {   system("clear");
         FILE *cfile = fopen("log_customer.csv", "a+");
+        regC:
 
        // printf("\n\n\t\t\t\tEnter your name: ");
         enter("Name : ", 4);
@@ -44,8 +46,26 @@ void reg()
             return;
         }
 
+        int exists = 0;
+
         system("clear");
-        fprintf(cfile, "%s|%s|%s\n", add_c.name, add_c.clogin.id, add_c.clogin.pass); // add record to database
+        while(fscanf(cfile, "%49[^|]|%19[^|]|%19[^\n]\n", check_c.name, check_c.clogin.id, check_c.clogin.pass) != EOF)
+        {
+            if(strcmp(check_c.clogin.id, add_c.clogin.id))
+            {
+                exists = 1;
+            }
+        }
+        if(exists)
+        {
+            printf("\n\t\t\t\tUsername already in use.");
+            usleep(1000000);
+            goto regC;
+        }
+        else
+        {
+            fprintf(cfile, "%s|%s|%s\n", add_c.name, add_c.clogin.id, add_c.clogin.pass); // add record to database
+        }
         
         printf("\n\t\t\t\t%sPlease wait while we create your account%s", YELLOW_TEXT, RESET_TEXT);
         loading();
@@ -59,6 +79,8 @@ void reg()
     else if (choice == 2)
     {
         FILE *dfile = fopen("log_driver.csv", "a+");
+
+        regD:
 
         //printf("\n\t\t\t\tEnter your name: ");
         enter("Name : ", 4);
@@ -82,8 +104,26 @@ void reg()
             printf("\t\t\t\tCan't open file.\n");
             return;
         }
+        int exists = 0;
+
         system("clear");
-        fprintf(dfile, "%s|%s|%s\n", add_d.name, add_d.dlogin.id, add_d.dlogin.pass); // add record to database
+        while(fscanf(dfile, "%49[^|]|%19[^|]|%19[^\n]\n", check_d.name, check_d.dlogin.id, check_d.dlogin.pass) != EOF)
+        {
+            if(strcmp(check_d.dlogin.id, add_d.dlogin.id))
+            {
+                exists = 1;
+            }
+        }
+        if(exists)
+        {
+            printf("\n\t\t\t\tUsername already in use.");
+            usleep(1000000);
+            goto regD;
+        }
+        else
+        {
+            fprintf(dfile, "%s|%s|%s\n", add_d.name, add_d.dlogin.id, add_d.dlogin.pass); // add record to database
+        }
 
         printf("\n\t\t\t\t%sPlease wait while we create your account%s", YELLOW_TEXT, RESET_TEXT);
        loading();
@@ -126,10 +166,13 @@ relogin:
 
         scanf("%s", check_c.clogin.id);
 
+        int exists = 0;
+
         while (fscanf(cfile, "%49[^|]|%19[^|]|%19[^\n]\n", add_c.name, add_c.clogin.id, add_c.clogin.pass) != EOF)
         {
             if (strcmp(add_c.clogin.id, check_c.clogin.id) == 0)
             {
+                exists = 1;
             tryPass_C:
                 if (pass_attempts > 0)
                 {
@@ -169,6 +212,12 @@ relogin:
                 }
             }
         }
+        if(!exists)
+        {
+            printf("\t\t\t\t%sINVALID CHOICE%s\n",RED_TEXT, RESET_TEXT); 
+            usleep(2000000);
+            goto relogin;
+        }
     }
     else if (choice == 2)
     {
@@ -179,10 +228,13 @@ relogin:
 
         scanf("%s", check_d.dlogin.id);
 
+        int exists = 0;
+
         while (fscanf(dfile, "%49[^|]|%19[^|]|%19[^\n]\n", add_d.name, add_d.dlogin.id, add_d.dlogin.pass) != EOF)
         {
             if (strcmp(add_d.dlogin.id, check_d.dlogin.id) == 0)
             {
+                exists = 1;
             tryPass_D:
                 if (pass_attempts > 0)
                 {
@@ -219,6 +271,12 @@ relogin:
                     goto tryPass_D;
                 }
             }
+        }
+        if(!exists)
+        {
+            printf("\t\t\t\t%sINVALID CHOICE%s\n",RED_TEXT, RESET_TEXT); 
+            usleep(2000000);
+            goto relogin;
         }
     }
     else if (choice == 3) {rerun=1;}
