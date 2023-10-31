@@ -141,23 +141,31 @@ void admin()
                 else
                 {
                     fp = fopen("vehicle_details.csv", "r");
+                    FILE* dfile = fopen("log_driver.csv", "r+");
 
                     // Consume any leftover newline characters
                     clear_leftover();
 
                     // Input driver details from the user
-                    printf("\t\t\t\tEnter Driver's name: ");
-                    fgets(add_d.name, 50, stdin);
+                    printf("\t\t\t\tEnter Driver's ID: ");
+                    fgets(check_d.dlogin.id, ID_PASS_MAX, stdin);
 
-                    remove_endline(add_d.name);
+                    remove_endline(check_d.dlogin.id);
 
-                    if (fp == NULL)
+                    if (fp == NULL || dfile == NULL)
                     {
                         printf("\t\t\t\tError opening the file.\n");
                     }
 
                     else
                     {
+                        while(fscanf(dfile, "%49[^|]|%19[^|]|%19[^\n]\n", add_d.name, add_d.dlogin.id, add_d.dlogin.pass) != EOF)
+                        {
+                            if(check_d.dlogin.id == add_d.dlogin.id)
+                            {
+                                break;
+                            }
+                        }
                         printf("Vehicle Number\n");
 
                         // Read and print each line from the CSV file
@@ -193,6 +201,7 @@ void admin()
 
                             // Close the file
                             fclose(file);
+                            fclose(dfile);
                             system("cls");
                             loading();
                             printf("\t\t\t\tDriver details added to the CSV file.\n");
