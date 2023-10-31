@@ -56,7 +56,7 @@ void loading(void)
         printf("%s] %d%%", BBLU, i * 100 / width);
 
         fflush(stdout);
-        if (i % 10 == 0)
+        if (i % 15 == 0)
         {
             usleep(500000);
         }
