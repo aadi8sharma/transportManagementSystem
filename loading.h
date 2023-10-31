@@ -11,7 +11,7 @@
 #define BLUE_TEXT "\x1B[34m"
 #define RESET_TEXT "\x1B[0m"
 #define PINK_TEXT "\x1B[35m"
-
+#define CYAN_TEXT "\x1B[36m"
 // bold colored
 #define BBLK "\e[1;30m"
 #define BRED "\e[1;31m"
@@ -33,14 +33,14 @@
 #define UWHT "\e[4;37m"
 
 void loading(void)
-{
+{  
     int i;
     int width = 40; // Width of the loading bar
-
+    printf("\n");
     for (i = 0; i <= width; i++) // for each iteration it prints some = and other spaces
-    {
+    {   
         // Printing the loading bar
-        printf("\r%s[%s", BBLU, BRED);
+        printf("\r\t\t\t\t%s[%s", BBLU, BRED);
         for (int j = 0; j < i; j++)
         {
             printf("=");
@@ -69,7 +69,26 @@ void loading(void)
             usleep(20000);
         }
     }
-    printf("\n%sLoading Complete!%s\n", BGRN, RESET_TEXT);
+    printf("\n\t\t\t\t%sLoading Complete!%s\n", BGRN, RESET_TEXT);
     usleep(900000);
     system("clear");
+}
+
+
+void enter(char ent[], int t)
+{ printf("\n");
+int count=0;
+while (count<t) {printf("\t"); count++;}
+int key=0;
+          while (ent[key]!='\0')
+          { count=0;
+            if (ent[key]=='|') {printf("\n");  while (count<t) {printf("\t"); count++;}}
+          else
+           { printf("%c", ent[key]);}
+          fflush(stdout);
+          key++;
+          usleep(30000);
+          
+            }
+           
 }
