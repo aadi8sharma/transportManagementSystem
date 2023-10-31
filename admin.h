@@ -87,7 +87,7 @@ void del_v(const char *filename, const char *vehicleNumberToDelete)
     char vehicleNumber[100]; // Adjust buffer size based on the expected vehicle number length
     int found = 0;
 
-    while (fscanf(inputFile, " %99[^|\n]\n", vehicleNumber) != EOF)
+    while (fscanf(inputFile, " %99[^\n]\n", vehicleNumber) != EOF)
     {
         if (strcmp(vehicleNumber, vehicleNumberToDelete) == 0)
         {
@@ -430,25 +430,7 @@ void admin()
                     printf("\t\t\t\tEnter vehicle number of the vehicle to be deleted: ");
                     scanf("%s", delVehicle.vehicleNumber);
 
-                    int chck = 0;
-                    fp = fopen("vehicle_details.csv", "r");
-                    while (fscanf(fp, "%19[^\n]\n", viewVehicle.vehicleNumber) != EOF)
-                    {
-                        if (strcmp(viewVehicle.vehicleNumber, delVehicle.vehicleNumber) == 0)
-                        {
-                            chck = 1;
-                            break;
-                        }
-                    }
-                    if (chck == 0)
-                    {
-                        printf("\t\t\t\tVehicle not in list\n");
-                    }
-
-                    else
-                    {
-                        del_v(filename1, delVehicle.vehicleNumber);
-                    }
+                    del_v(filename1, delVehicle.vehicleNumber);
                 }
                 clear_leftover();
                 printf("\t\t\t\tPress enter to continue");
@@ -478,25 +460,8 @@ void admin()
                     printf("\t\t\t\tEnter driver name to be deleted: ");
                     fgets(del_d.name, 100, stdin);
                     remove_endline(del_d.name);
-                    int chck = 0;
-                    fp = fopen("driver_details.csv", "r");
-                    while (fscanf(fp, "%99[^|]|%19[^\n]\n", read_d.name, read_d.curr_veh.vehicleNumber) != EOF)
-                    {
-                        if (strcmp(del_d.name, read_d.name))
-                        {
-                            chck = 1;
-                            break;
-                        }
-                    }
-                    fclose(fp);
-                    if (chck == 0)
-                    {
-                        printf("\t\t\t\tDriver not in list\n");
-                    }
-                    else
-                    {
-                        delDriver(filename, del_d.name);
-                    }
+
+                    printf("\t\t\t\tDriver not in list\n");
                 }
                 clear_leftover();
                 printf("\t\t\t\tPress enter to continue");
