@@ -437,7 +437,7 @@ void admin()
 
                     else
                     {
-                        del_v(filename1, viewVehicle.vehicleNumber);
+                        del_v(filename1, delVehicle.vehicleNumber);
                     }
                 }
                 clear_leftover();
