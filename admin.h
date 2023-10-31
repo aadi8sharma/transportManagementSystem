@@ -417,7 +417,7 @@ void admin()
                     fclose(file);
 
                     clear_leftover();
-                    printf("Enter vehicle number of the vehicle to be deleted: ");
+                    printf("\t\t\t\tEnter vehicle number of the vehicle to be deleted: ");
                     fgets(delVehicle.vehicleNumber, 20, stdin);
                     remove_endline(delVehicle.vehicleNumber);
                     int chck = 0;
@@ -438,7 +438,6 @@ void admin()
                     else
                     {
                         del_v(filename1, viewVehicle.vehicleNumber);
-                        printf("\t\t\t\tRecord has been deleted");
                     }
                 }
                 clear_leftover();
@@ -466,7 +465,7 @@ void admin()
                     fclose(file);
 
                     clear_leftover();
-                    printf("Enter driver name to be deleted: ");
+                    printf("\t\t\t\tEnter driver name to be deleted: ");
                     fgets(del_d.name, 100, stdin);
                     remove_endline(del_d.name);
                     int chck = 0;
@@ -487,7 +486,6 @@ void admin()
                     else
                     {
                         delDriver(filename, del_d.name);
-                        printf("Successfully deleted");
                     }
                 }
                 clear_leftover();
