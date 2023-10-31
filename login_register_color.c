@@ -28,9 +28,11 @@ void reg()
        // printf("\n\n\t\t\t\tEnter your name: ");
         enter("Name : ", 4);
         scanf("%s", add_c.name);
+        fflush(stdin);
         //printf("\n\t\t\t\tEnter new login id: ");
         enter("New Username : ", 4);
         scanf("%s", add_c.clogin.id);
+        fflush(stdin);
         //printf("\n\t\t\t\tEnter new password: ");
         enter("New Password : ", 4);
         scanf("%s", add_c.clogin.pass);
@@ -62,16 +64,18 @@ void reg()
         enter("Name : ", 4);
 
         scanf("%s", add_d.name);
-
+        fflush(stdin);
         //printf("\n\t\t\t\tEnter new login id: ");
         enter("New Username : ", 4);
 
         scanf("%s", add_d.dlogin.id);
+        fflush(stdin);
 
         //printf("\n\t\t\t\tEnter new password: ");
         enter("New Password : ", 4);
 
         scanf("%s", add_d.dlogin.pass);
+        fflush(stdin);
         if (!dfile)
         {
             // error in file opening
@@ -226,7 +230,7 @@ int main()
 { system("clear");
 
     int ab=0;
-    strt: system("clear");
+    strt: rerun=0; system("clear");
 printf("\t\t\t\t\t\t%sTRANSPORT MANAGEMENT SYSTEM%s\n\n",BWHT,RESET_TEXT);
 printf("\t\t\t\t%s1. Log In Account\n\n\t\t\t\t2. Register New Account\n\n\t\t\t\t3. About\n\n\t\t\t\t4. Admin Login\n\n\t\t\t\t%s", CYAN_TEXT, GREEN_TEXT);
 enter("Enter Choice : ", 4);
