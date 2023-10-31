@@ -101,12 +101,6 @@ void del_v(const char *filename, const char *vehicleNumberToDelete)
     fclose(inputFile);
     fclose(tempFile);
 
-    if (remove(filename) != 0)
-    {
-        perror("Error deleting the original file");
-        exit(EXIT_FAILURE);
-    }
-
     if (rename("temp.csv", filename) != 0)
     {
         perror("Error renaming the temporary file");
