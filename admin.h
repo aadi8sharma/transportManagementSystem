@@ -428,8 +428,8 @@ void admin()
 
                     clear_leftover();
                     printf("\t\t\t\tEnter vehicle number of the vehicle to be deleted: ");
-                    fgets(delVehicle.vehicleNumber, 20, stdin);
-                    remove_endline(delVehicle.vehicleNumber);
+                    scanf("%s", delVehicle.vehicleNumber);
+
                     int chck = 0;
                     fp = fopen("vehicle_details.csv", "r");
                     while (fscanf(fp, "%19[^\n]\n", viewVehicle.vehicleNumber) != EOF)
