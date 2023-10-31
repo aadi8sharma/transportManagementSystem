@@ -87,19 +87,26 @@ void del_v(const char *filename, const char *vehicleNumberToDelete)
     char vehicleNumber[100]; // Adjust buffer size based on the expected vehicle number length
     int found = 0;
 
-    while (fscanf(inputFile, "%19[^\n]\n", vehicleNumber) != EOF)
+    while (fscanf(inputFile, " %99[^|\n]\n", vehicleNumber) != EOF)
     {
         if (strcmp(vehicleNumber, vehicleNumberToDelete) == 0)
         {
             found = 1;
-            continue; // Skip this line (record to be deleted)
         }
-
-        fprintf(tempFile, "%s\n", vehicleNumber); // Write the line back to the temporary file
+        else
+        {
+            fprintf(tempFile, "%s\n", vehicleNumber); // Write the line back to the temporary file
+        }
     }
 
     fclose(inputFile);
     fclose(tempFile);
+
+    if (remove(filename) != 0)
+    {
+        perror("Error deleting the original file");
+        exit(EXIT_FAILURE);
+    }
 
     if (rename("temp.csv", filename) != 0)
     {
