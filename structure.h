@@ -12,7 +12,7 @@ struct Vehicle
 {
     char vehicleNumber[20];
 
-} newVehicle, viewVehicle;
+} newVehicle, viewVehicle, delVehicle;
 
 struct Customer
 {
@@ -33,4 +33,4 @@ struct Driver
     char name[50];
     struct LoginDetails dlogin;
     struct Vehicle curr_veh;
-} add_d, check_d, upd_d, read_d;
+} add_d, check_d, upd_d, read_d, del_d;

@@ -1,17 +1,23 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include "admin.h"
-#include "admin_login_details.h"
+#include "structure.h"
+#include "loading.h"
 #define ID_PASS_MAX 20
+int rerun=0;
+int pass_attempts = 3;
 
 void reg()
-{
-    system("cls");
-    printf("\t\t\t\t\t\t\tREGISTER\t\t\t\n\n");
-    printf("\t\t\t\tSelect account type: \n\n\t\t\t\t(1) Customer\n\t\t\t\t(2) Driver");
+{  loading();
+
+   rereg:
+   system("clear");
+    printf("\t\t\t\t\t\t\t%sREGISTER%s\t\t\t\n\n", BCYN, RESET_TEXT);
+    printf("\t\t\t\t%sSelect account type: %s\n\n\t\t\t\t(1) Customer\n\t\t\t\t(2) Driver\n\t\t\t\t(3) Exit%s\n", YELLOW_TEXT, BLUE_TEXT, RESET_TEXT);
     int choice;
-    printf("\n\t\t\t\t>>> ");
+    printf("%s",GREEN_TEXT);
+    enter(">>>", 4);
+    printf("%s", RESET_TEXT);
     scanf("%d", &choice);
     if (choice == 1)
     {
@@ -30,14 +36,8 @@ void reg()
         }
         system("clear");
         fprintf(cfile, "%s|%s|%s\n", add_c.name, add_c.clogin.id, add_c.clogin.pass); // add record to database
-        printf("\n\t\t\t\tPlease wait while we create your account");
-        for (int i = 0; i <= 6; i++)
-        {
-            printf(".");
-            usleep(125000);
-        }
-        system("cls");
-        printf("\n\t\t\t\tNew account created.");
+        
+        loading();
 
         fclose(cfile);
     }
@@ -70,16 +70,24 @@ void reg()
 
         fclose(dfile);
     }
+    else if (choice==3) 
+    {
+       rerun=1;
+    }
+    else 
+    {   printf("\t\t\t\t%sINVALID CHOICE%s\n",RED_TEXT, RESET_TEXT); usleep(2000000);
+        goto rereg;}
 }
 
 void loginf()
-{
-    int pass_attempts = 3;
-    system("cls");
-    printf("\t\t\t\t\t\t\tLOG IN\n\n");
-    printf("\t\t\t\tSelect account type: \n\n\t\t\t\t(1) Customer\n\t\t\t\t(2) Driver");
+{   loading();
+   
+    printf("\t\t\t\t\t\t\t%sLOG IN%s\n\n", BCYN, RESET_TEXT);
+    printf("\t\t\t\t%sSelect account type:%s \n\n\t\t\t\t%s(1) Customer\n\t\t\t\t(2) Driver%s\n", BYEL, RESET_TEXT, BLUE_TEXT, RESET_TEXT);
     int choice;
-    printf("\n\t\t\t\t>>> ");
+    printf("%s",GREEN_TEXT);
+    enter(">>>", 4);
+    printf("%s", RESET_TEXT);
     scanf("%d", &choice);
     system("cls");
     if (choice == 1)
@@ -116,14 +124,8 @@ void loginf()
                 }
                 else
                 {
-                    for (int i = 30; i > 0; i--)
-                    {
-                        printf("Account temporarily disabled, wait for %d seconds", i);
-                        usleep(1000000);
-                        system("cls");
-                    }
-                    pass_attempts = 3;
-                    goto tryPass_C;
+                    printf("Acount locked");
+                    return;
                 }
             }
         }
@@ -162,14 +164,8 @@ void loginf()
                 }
                 else
                 {
-                    for (int i = 60; i > 0; i--)
-                    {
-                        printf("Account temporarily disabled, wait for %d seconds", i);
-                        usleep(1000000);
-                        system("cls");
-                    }
-                    pass_attempts = 3;
-                    goto tryPass_D;
+                    printf("Acount locked");
+                    return;
                 }
             }
         }
@@ -177,93 +173,56 @@ void loginf()
 }
 
 int main()
-{
-    system("cls");
-    int ab = 0;
-    printf("\t\t\t\t\t\tTRANSPORT MANAGEMENT SYSTEM\n\n");
-    printf("\t\t\t\t(1)Log In\n\n\t\t\t\t(2)Sign Up\n\n\t\t\t\t(3)About\n\n\t\t\t\t(*)Admin");
-strt:
-    printf("\n\t\t\t\t>>> ");
-    scanf("%c", &ab);
-    switch (ab)
-    {
-    case '1':
-    {
-        loginf();
-        break;
-    }
+{ system("clear");
 
-    case '2':
-    {
-        reg();
-        break;
-    }
-    case '3':
-    {
-        char credits[1000] = "EndSem Project |Aaditya Sharma |Unmilan Das |Pathya Taya |Swastik Mantri |Suvansh Sharma";
-        int key = 0;
-        while (credits[key] != '\0')
+    int ab=0;
+    strt: system("clear");
+printf("\t\t\t\t\t\t%sTRANSPORT MANAGEMENT SYSTEM%s\n\n",BWHT,RESET_TEXT);
+printf("\t\t\t\t%s1. Log In Account\n\n\t\t\t\t2. Register New Account\n\n\t\t\t\t3. About%s\n\n\t\t\t\t%s", CYAN_TEXT, RESET_TEXT, GREEN_TEXT);
+enter("Enter Choice : ", 4);
+printf("%s", RESET_TEXT);
+scanf("%d", &ab);
+    switch(ab)
+    { 
+        case 1:
         {
-            if (credits[key] == '|')
-            {
-                printf("\n");
-            }
-            else
-            {
-                printf("%c", credits[key]);
-            }
-            fflush(stdout);
-            key++;
-            usleep(40000);
+            loginf();
+            break;
         }
 
-        break;
-    }
-    case '*':
-    {
-        int pass_attempts = 3;
-        system("cls");
-        char admin_key[50];
-    adminTry:
-        if (pass_attempts > 0)
-        {
-            pass_attempts--;
-            printf("\t\t\t\t\t\t\tADMIN LOG IN");
-            printf("\n\n\t\t\t\tEnter key: ");
-            scanf("%s", admin_key);
-            if (strcmp(admin_key, ADMIN_PASS) == 0)
-            {
-                loading();
-                admin();
-            }
-            else
-            {
-                printf("\n\t\t\t\tIncorrect key.\n\t\t\t\t%d attempts left.", pass_attempts);
-                usleep(1500000);
-                system("cls");
-                goto adminTry;
-            }
-        }
-        else
-        {
-            for (int i = 60; i > 0; i--)
-            {
-                printf("Account temporarily disabled, redirecting to main menu in %d seconds", i);
-                usleep(1000000);
-                system("cls");
-            }
-            main();
+        case 2:
+        { 
+            reg();
+            if (rerun==1) {goto strt;}
+            break;
         }
 
-        break;
-    }
-    default:
-    {
-        printf("INVALID CHOICE");
-        goto strt;
-        break;
-    }
-    }
+        case 3:
+        { system("clear");
+        printf("%s", BYEL);
+         char credits[1000]="\t\t\t\tEnd-Sem Project ||\t\t\t\tAaditya Sharma |\t\t\t\tUnmilan Das |\t\t\t\tPathya Taya |\t\t\t\tSwastik Mantri |\t\t\t\tSuvansh Sharma|";
+        int key=0;
+          while (credits[key]!='\0')
+          { if (credits[key]=='|') {printf("\n%s", RESET_TEXT);}
+          else
+           { printf("%c", credits[key]);}
+          fflush(stdout);
+          key++;
+          usleep(30000);
+            }
+            printf("\t\t\t\t");
+            char esc;
+            fflush(stdin);
+            scanf("%c", &esc);
+            goto strt;
 
+            break;
+        }
+        default:
+        {printf("\t\t\t\t%sINVALID CHOICE%s\n",RED_TEXT, RESET_TEXT); usleep(2000000);
+          goto strt;
+          break;}
+
+    }
     return 0;
 }
