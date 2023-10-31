@@ -81,6 +81,7 @@ void admin()
     while (x == 1)
     {
         int ch1;
+        const char *filename = "driver_details.csv";
         printf("\t\t\t\t1. Add record\n\t\t\t\t2. View record\n\t\t\t\t3. Delete record\n");
         printf("\t\t\t\tEnter choice :\n\t\t\t\t>>>");
         scanf("%d", &ch1);
@@ -390,7 +391,7 @@ void admin()
                 }
                 break;
             case 2:
-                const char *filename = "driver_details.csv";
+
                 file = fopen("driver_details.csv", "r");
 
                 if (file == NULL)
