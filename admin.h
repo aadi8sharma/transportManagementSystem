@@ -87,19 +87,26 @@ void del_v(const char *filename, const char *vehicleNumberToDelete)
     char vehicleNumber[100]; // Adjust buffer size based on the expected vehicle number length
     int found = 0;
 
-    while (fscanf(inputFile, "%19[^\n]\n", vehicleNumber) != EOF)
+    while (fscanf(inputFile, " %99[^\n]\n", vehicleNumber) != EOF)
     {
         if (strcmp(vehicleNumber, vehicleNumberToDelete) == 0)
         {
             found = 1;
-            continue; // Skip this line (record to be deleted)
         }
-
-        fprintf(tempFile, "%s\n", vehicleNumber); // Write the line back to the temporary file
+        else
+        {
+            fprintf(tempFile, "%s\n", vehicleNumber); // Write the line back to the temporary file
+        }
     }
 
     fclose(inputFile);
     fclose(tempFile);
+
+    if (remove(filename) != 0)
+    {
+        perror("Error deleting the original file");
+        exit(EXIT_FAILURE);
+    }
 
     if (rename("temp.csv", filename) != 0)
     {
@@ -421,27 +428,9 @@ void admin()
 
                     clear_leftover();
                     printf("\t\t\t\tEnter vehicle number of the vehicle to be deleted: ");
-                    fgets(delVehicle.vehicleNumber, 20, stdin);
-                    remove_endline(delVehicle.vehicleNumber);
-                    int chck = 0;
-                    fp = fopen("vehicle_details.csv", "r");
-                    while (fscanf(fp, "%19[^\n]\n", viewVehicle.vehicleNumber) != EOF)
-                    {
-                        if (strcmp(viewVehicle.vehicleNumber, delVehicle.vehicleNumber) == 0)
-                        {
-                            chck = 1;
-                            break;
-                        }
-                    }
-                    if (chck == 0)
-                    {
-                        printf("\t\t\t\tVehicle not in list\n");
-                    }
+                    scanf("%s", delVehicle.vehicleNumber);
 
-                    else
-                    {
-                        del_v(filename1, delVehicle.vehicleNumber);
-                    }
+                    del_v(filename1, delVehicle.vehicleNumber);
                 }
                 clear_leftover();
                 printf("\t\t\t\tPress enter to continue");
@@ -471,25 +460,8 @@ void admin()
                     printf("\t\t\t\tEnter driver name to be deleted: ");
                     fgets(del_d.name, 100, stdin);
                     remove_endline(del_d.name);
-                    int chck = 0;
-                    fp = fopen("driver_details.csv", "r");
-                    while (fscanf(fp, "%99[^|]|%19[^\n]\n", read_d.name, read_d.curr_veh.vehicleNumber) != EOF)
-                    {
-                        if (strcmp(del_d.name, read_d.name))
-                        {
-                            chck = 1;
-                            break;
-                        }
-                    }
-                    fclose(fp);
-                    if (chck == 0)
-                    {
-                        printf("\t\t\t\tDriver not in list\n");
-                    }
-                    else
-                    {
-                        delDriver(filename, del_d.name);
-                    }
+
+                    printf("\t\t\t\tDriver not in list\n");
                 }
                 clear_leftover();
                 printf("\t\t\t\tPress enter to continue");
@@ -498,6 +470,10 @@ void admin()
             default:
                 break;
             }
+        }
+        else
+        {
+            printf("INVALID CHOICE");
         }
 
         system("cls");
