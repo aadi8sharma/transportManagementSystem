@@ -83,14 +83,14 @@ void admin()
     {
         int ch1;
         printf("\t\t\t\t1. Add record\n\t\t\t\t2. View record\n\t\t\t\t3. Delete record\n");
-        printf("\t\t\t\tEnter choice : ");
+        printf("\t\t\t\tEnter choice :\n\t\t\t\t>>>");
         scanf("%d", &ch1);
         system("cls");
         if (ch1 == 1)
         {
             int ch;
             printf("\t\t\t\t1. Vehicle details\n\t\t\t\t2. Driver details\n\t\t\t\t3. Order details\n");
-            printf("\t\t\t\tEnter choice : ");
+            printf("\t\t\t\tEnter choice :\n>>>");
             scanf("%d", &ch);
             system("cls");
             FILE *file, *fp;
@@ -253,7 +253,7 @@ void admin()
 
             int ch;
             printf("\t\t\t\t1. Vehicle details\n\t\t\t\t2. Driver details\n\t\t\t\t3. Oreder details\n");
-            printf("\t\t\t\tEnter choice : ");
+            printf("\t\t\t\tEnter choice :\n\t\t\t\t>>>");
             scanf("%d", &ch);
             system("cls");
             FILE *fp;
@@ -339,7 +339,7 @@ void admin()
         {
             int ch;
             printf("\t\t\t\t1. Vehicle details\n\t\t\t\t2. Driver details\n\t\t\t\t3. Oreder details\n");
-            printf("\t\t\t\tEnter choice : ");
+            printf("\t\t\t\tEnter choice :\n\t\t\t\t>>>");
             scanf("%d", &ch);
             system("cls");
             FILE *fp;
@@ -366,7 +366,7 @@ void admin()
                     fclose(fp);
 
                     clear_leftover();
-                    printf("Enter vehicle number of the vehicle to be deleted: ");
+                    printf("Enter vehicle number of the vehicle to be deleted: \n\t\t\t\t");
                     fgets(delVehicle.vehicleNumber, 20, stdin);
                     remove_endline(delVehicle.vehicleNumber);
                     int chck = 0;
