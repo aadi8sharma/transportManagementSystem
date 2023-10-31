@@ -29,7 +29,7 @@ void delDriver(const char *filename, const char *nameToDelete)
 
     if (inputFile == NULL || tempFile == NULL)
     {
-        perror("File open error");
+        perror("\t\t\t\tFile open error");
         exit(EXIT_FAILURE);
     }
 
@@ -53,23 +53,73 @@ void delDriver(const char *filename, const char *nameToDelete)
 
     if (remove(filename) != 0)
     {
-        perror("Error deleting the original file");
+        perror("\t\t\t\tError deleting the original file");
         exit(EXIT_FAILURE);
     }
 
     if (rename("temp.csv", filename) != 0)
     {
-        perror("Error renaming the temporary file");
+        perror("\t\t\t\tError renaming the temporary file");
         exit(EXIT_FAILURE);
     }
 
     if (found)
     {
-        printf("Record for driver '%s' deleted successfully.\n", nameToDelete);
+        printf("\t\t\t\tRecord for driver '%s' deleted successfully.\n", nameToDelete);
     }
     else
     {
-        printf("Record for driver '%s' not found.\n", nameToDelete);
+        printf("\t\t\t\tRecord for driver '%s' not found.\n", nameToDelete);
+    }
+}
+
+void del_v(const char *filename, const char *nameToDelete)
+{
+    FILE *inputFile = fopen(filename, "r");
+    FILE *tempFile = fopen("temp.csv", "w");
+
+    if (inputFile == NULL || tempFile == NULL)
+    {
+        perror("\t\t\t\tFile open error");
+        exit(EXIT_FAILURE);
+    }
+
+    char vehicleNumber[20]; // Adjust buffer size based on the expected vehicle number length
+    int found = 0;
+
+    while (fscanf(inputFile, " %19[^\n]\n", vehicleNumber) != EOF)
+    {
+        if (strcmp(vehicleNumber, nameToDelete) == 0)
+        {
+            found = 1;
+            continue; // Skip this line (record to be deleted)
+        }
+
+        fprintf(tempFile, "%s\n", vehicleNumber); // Write the line back to the temporary file
+    }
+
+    fclose(inputFile);
+    fclose(tempFile);
+
+    if (remove(filename) != 0)
+    {
+        perror("\t\t\t\tError deleting the original file");
+        exit(EXIT_FAILURE);
+    }
+
+    if (rename("temp.csv", filename) != 0)
+    {
+        perror("\t\t\t\tError renaming the temporary file");
+        exit(EXIT_FAILURE);
+    }
+
+    if (found)
+    {
+        printf("\t\t\t\tRecord for driver '%s' deleted successfully.\n", nameToDelete);
+    }
+    else
+    {
+        printf("\t\t\t\tRecord for driver '%s' not found.\n", nameToDelete);
     }
 }
 
@@ -82,6 +132,7 @@ void admin()
     {
         int ch1;
         const char *filename = "driver_details.csv";
+        const char *filename1 = "vehicle_details.csv";
         printf("\t\t\t\t1. Add record\n\t\t\t\t2. View record\n\t\t\t\t3. Delete record\n");
         printf("\t\t\t\tEnter choice :\n\t\t\t\t>>>");
         scanf("%d", &ch1);
@@ -346,9 +397,9 @@ void admin()
             switch (ch)
             {
             case 1:
-                fp = fopen("vehicle_details.csv", "r");
+                file = fopen("vehicle_details.csv", "r");
 
-                if (fp == NULL)
+                if (file == NULL)
                 {
                     printf("\t\t\t\tError opening the file.\n");
                 }
@@ -358,12 +409,12 @@ void admin()
                     printf("Vehicle Number\n");
 
                     // Read and print each line from the CSV file
-                    while (fscanf(fp, "%19[^|]\n", viewVehicle.vehicleNumber) != EOF)
+                    while (fscanf(file, "%19[^|]\n", viewVehicle.vehicleNumber) != EOF)
                     {
                         printf("%s\n", viewVehicle.vehicleNumber);
                     }
 
-                    fclose(fp);
+                    fclose(file);
 
                     clear_leftover();
                     printf("Enter vehicle number of the vehicle to be deleted: ");
@@ -386,6 +437,7 @@ void admin()
 
                     else
                     {
+                        del_v(filename1, viewVehicle.vehicleNumber);
                         printf("\t\t\t\tRecord has been deleted");
                     }
                 }
