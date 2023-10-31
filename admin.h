@@ -21,6 +21,59 @@ void clear_leftover()
         ;
 }
 
+// Function to delete a record by unique column value
+void deleteRecord(const char *filename, const char *uniqueValue)
+{
+    FILE *inputFile = fopen(filename, "r");
+    FILE *tempFile = fopen("temp.csv", "w");
+
+    if (inputFile == NULL || tempFile == NULL)
+    {
+        perror("File open error");
+        exit(EXIT_FAILURE);
+    }
+
+    char line[1024]; // Adjust this buffer size based on your CSV file's expected maximum line length
+    int found = 0;
+
+    while (fgets(line, sizeof(line), inputFile))
+    {
+        char *token = strtok(line, ",");
+
+        if (strcmp(token, uniqueValue) == 0)
+        {
+            found = 1;
+            continue; // Skip this line (record to be deleted)
+        }
+
+        fputs(line, tempFile);
+    }
+
+    fclose(inputFile);
+    fclose(tempFile);
+
+    if (remove(filename) != 0)
+    {
+        perror("Error deleting the original file");
+        exit(EXIT_FAILURE);
+    }
+
+    if (rename("temp.csv", filename) != 0)
+    {
+        perror("Error renaming the temporary file");
+        exit(EXIT_FAILURE);
+    }
+
+    if (found)
+    {
+        printf("Record with unique value '%s' deleted successfully.\n", uniqueValue);
+    }
+    else
+    {
+        printf("Record with unique value '%s' not found.\n", uniqueValue);
+    }
+}
+
 void admin()
 {
     system("cls");
@@ -284,7 +337,6 @@ void admin()
         }
         if (ch1 == 3)
         {
-            /* code */
         }
 
         system("cls");
