@@ -112,7 +112,7 @@ void admin()
                             printf("%s\n", viewVehicle.vehicleNumber);
                         }
                         fclose(fp);
-                        printf("\t\t\t\tEnter vehicle number from list: ");
+                        printf("\n\t\t\t\tEnter vehicle number from list: ");
                         fgets(add_d.curr_veh.vehicleNumber, 20, stdin);
                         remove_endline(add_d.curr_veh.vehicleNumber);
                         int chck = 0;
@@ -128,7 +128,7 @@ void admin()
                         }
                         if (chck == 0)
                         {
-                            printf("\n\t\t\t\tVehicle not in list\n");
+                            printf("\t\t\t\tVehicle not in list\n");
                         }
 
                         else
@@ -154,22 +154,22 @@ void admin()
 
                 if (file == NULL)
                 {
-                    printf("Error opening the file.\n");
+                    printf("\t\t\t\tError opening the file.\n");
                 }
                 else
                 {
                     clear_leftover();
 
                     // Input vehicle details from the user
-                    printf("Enter Customer Number: ");
+                    printf("\t\t\t\tEnter Customer Number: ");
                     fgets(add_o.cus.name, 50, stdin);
                     remove_endline(add_o.cus.name);
 
-                    printf("Enter Pick up location: ");
+                    printf("\t\t\t\tEnter Pick up location: ");
                     fgets(add_o.pick_loc, 100, stdin);
                     remove_endline(add_o.pick_loc);
 
-                    printf("Enter Delivery location: ");
+                    printf("\t\t\t\tEnter Delivery location: ");
                     fgets(add_o.del_dest, 100, stdin);
                     remove_endline(add_o.del_dest);
 
@@ -180,16 +180,16 @@ void admin()
                     fclose(file);
                     system("cls");
                     loading();
-                    printf("Order details added to the CSV file.\n");
+                    printf("\t\t\t\tOrder details added to the CSV file.\n");
                 }
-                printf("Press enter to continue");
+                printf("\t\t\t\tPress enter to continue");
                 scanf("%c", &k);
                 break;
 
             default:
                 clear_leftover();
-                printf("Wrong choice...\n");
-                printf("Press enter to continue");
+                printf("\t\t\t\tWrong choice...\n");
+                printf("\t\t\t\tPress enter to continue");
                 scanf("%c", &k);
                 break;
             }
@@ -198,8 +198,8 @@ void admin()
         {
 
             int ch;
-            printf("1. Vehicle details\n2. Driver details\n3. Oreder details\n");
-            printf("Enter choice : ");
+            printf("\t\t\t\t1. Vehicle details\n\t\t\t\t2. Driver details\n\t\t\t\t3. Oreder details\n");
+            printf("\t\t\t\tEnter choice : ");
             scanf("%d", &ch);
             system("cls");
             FILE *fp;
@@ -211,7 +211,7 @@ void admin()
 
                 if (fp == NULL)
                 {
-                    printf("Error opening the file.\n");
+                    printf("\t\t\t\tError opening the file.\n");
                 }
 
                 else
@@ -225,7 +225,7 @@ void admin()
                     }
                 }
                 clear_leftover();
-                printf("Press enter to continue");
+                printf("\n\t\t\t\tPress enter to continue");
                 scanf("%c", &k);
                 break;
             case 2:
@@ -233,7 +233,7 @@ void admin()
 
                 if (fp == NULL)
                 {
-                    printf("Error opening the file.\n");
+                    printf("\t\t\t\tError opening the file.\n");
                 }
 
                 else
@@ -247,7 +247,7 @@ void admin()
                     }
                 }
                 clear_leftover();
-                printf("Press enter to continue");
+                printf("\n\t\t\t\tPress enter to continue");
                 scanf("%c", &k);
                 break;
             case 3:
@@ -255,7 +255,7 @@ void admin()
 
                 if (fp == NULL)
                 {
-                    printf("Error opening the file.\n");
+                    printf("\t\t\t\tError opening the file.\n");
                 }
 
                 else
@@ -269,14 +269,14 @@ void admin()
                     }
                 }
                 clear_leftover();
-                printf("Press enter to continue");
+                printf("\n\t\t\t\tPress enter to continue");
                 scanf("%c", &k);
                 break;
 
             default:
-                printf("Wrong choice...\n");
+                printf("\t\t\t\tWrong choice...\n");
                 clear_leftover();
-                printf("Press any enter to continue");
+                printf("\t\t\t\tPress enter to continue");
                 scanf("%c", &k);
                 break;
             }
@@ -287,7 +287,7 @@ void admin()
         }
 
         system("cls");
-        printf("Press 0 to exit and 1 to continue: ");
+        printf("\t\t\t\tPress 0 to exit and 1 to continue: ");
         scanf("%hi", &x);
     }
 }
