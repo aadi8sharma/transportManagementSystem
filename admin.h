@@ -87,7 +87,7 @@ void del_v(const char *filename, const char *vehicleNumberToDelete)
     char vehicleNumber[100]; // Adjust buffer size based on the expected vehicle number length
     int found = 0;
 
-    while (fscanf(inputFile, " %19[^\n]\n", vehicleNumber) != EOF)
+    while (fscanf(inputFile, "%19[^\n]\n", vehicleNumber) != EOF)
     {
         if (strcmp(vehicleNumber, vehicleNumberToDelete) == 0)
         {
@@ -186,7 +186,7 @@ void admin()
                 else
                 {
                     fp = fopen("vehicle_details.csv", "r");
-                    FILE* dfile = fopen("log_driver.csv", "r+");
+                    FILE *dfile = fopen("log_driver.csv", "r+");
 
                     // Consume any leftover newline characters
                     clear_leftover();
@@ -204,9 +204,9 @@ void admin()
 
                     else
                     {
-                        while(fscanf(dfile, "%49[^|]|%19[^|]|%19[^\n]\n", add_d.name, add_d.dlogin.id, add_d.dlogin.pass) != EOF)
+                        while (fscanf(dfile, "%49[^|]|%19[^|]|%19[^\n]\n", add_d.name, add_d.dlogin.id, add_d.dlogin.pass) != EOF)
                         {
-                            if(check_d.dlogin.id == add_d.dlogin.id)
+                            if (check_d.dlogin.id == add_d.dlogin.id)
                             {
                                 break;
                             }
