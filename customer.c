@@ -21,7 +21,7 @@ void add_order()
     int line_count=0;
     char buffer[2000],ch;
     fseek(ptr1,0,SEEK_SET);
-    //Counting the number of lines in the file already. 
+    //Counting the number of lines in the file already present. 
     while ((ch = fgetc(ptr1)) != EOF) {
         if (ch == '\n') {
             line_count++;
@@ -79,7 +79,6 @@ void add_order()
     strcpy(record.destination,destination);
     strcpy(record.item,item);
     record.quantity=quantity;
-    //record.customer_order_id=line_count;
     //Customer order id is taken as 1 greater than index
     record.customer_order_id=index+1;
     fprintf(ptr1,"%d %s %s %d %s ",record.customer_order_id,record.pickup,record.item,record.quantity,record.destination);
