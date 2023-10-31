@@ -413,6 +413,7 @@ void admin()
                     fgets(del_d.name, 100, stdin);
                     remove_endline(del_d.name);
                     int chck = 0;
+                    fp = fopen("driver_details.csv", "r");
                     while (fscanf(fp, "%99[^|]|%19[^\n]\n", read_d.name, read_d.curr_veh.vehicleNumber) != EOF)
                     {
                         if (strcmp(del_d.name, read_d.name))
