@@ -336,6 +336,62 @@ void admin()
         }
         if (ch1 == 3)
         {
+            int ch;
+            printf("\t\t\t\t1. Vehicle details\n\t\t\t\t2. Driver details\n\t\t\t\t3. Oreder details\n");
+            printf("\t\t\t\tEnter choice : ");
+            scanf("%d", &ch);
+            system("cls");
+            FILE *fp;
+            switch (ch)
+            {
+            case 1:
+                fp = fopen("order_details.csv", "r");
+
+                if (fp == NULL)
+                {
+                    printf("\t\t\t\tError opening the file.\n");
+                }
+
+                else
+                {
+                    printf("Customer name\tPick up location\tDelivery destination\n");
+
+                    // Read and print each line from the CSV file
+                    while (fscanf(fp, "%99[^|]|%99[^|]|%99[^\n]\n", read_o.cus.name, read_o.pick_loc, read_o.del_dest) != EOF)
+                    {
+                        printf("%-10s\t%-19s\t%s\n", read_o.cus.name, read_o.pick_loc, read_o.del_dest);
+                    }
+                    fclose(fp);
+
+                    clear_leftover();
+                    fgets(delVehicle.vehicleNumber, 20, stdin);
+                    remove_endline(delVehicle.vehicleNumber);
+                    int chck = 0;
+                    fp = fopen("vehicle_details.csv", "r");
+                    while (fscanf(fp, "%19[^\n]\n", viewVehicle.vehicleNumber) != EOF)
+                    {
+                        if (strcmp(viewVehicle.vehicleNumber, add_d.curr_veh.vehicleNumber) == 0)
+                        {
+                            chck = 1;
+                            break;
+                        }
+                    }
+                    if (chck == 0)
+                    {
+                        printf("\t\t\t\tVehicle not in list\n");
+                    }
+
+                    else
+                    {
+                        deleteRecord("vehicle_details.csv", delVehicle.vehicleNumber);
+                        printf("\t\t\t\tRecord has been deleted");
+                    }
+                }
+                break;
+
+            default:
+                break;
+            }
         }
 
         system("cls");

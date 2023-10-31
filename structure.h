@@ -12,7 +12,7 @@ struct Vehicle
 {
     char vehicleNumber[20];
 
-} newVehicle, viewVehicle;
+} newVehicle, viewVehicle, delVehicle;
 
 struct Customer
 {
