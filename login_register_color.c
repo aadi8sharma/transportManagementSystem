@@ -36,14 +36,8 @@ void reg()
         }
         system("clear");
         fprintf(cfile, "%s|%s|%s\n", add_c.name, add_c.clogin.id, add_c.clogin.pass); // add record to database
-        printf("\n\t\t\t\tPlease wait while we create your account");
-        for (int i = 0; i <= 6; i++)
-        {
-            printf(".");
-            usleep(125000);
-        }
-        system("clear");
-        printf("\n\t\t\t\tNew account created.");
+        
+        loading();
 
         fclose(cfile);
     }
