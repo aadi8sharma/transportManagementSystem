@@ -3,12 +3,7 @@
 #include <string.h>
 #include <unistd.h>
 #include "structure.h"
-#define RED_TEXT "\x1B[31m"
-#define GREEN_TEXT "\x1B[32m"
-#define YELLOW_TEXT "\x1B[33m"
-#define BLUE_TEXT "\x1B[34m"
-#define RESET_TEXT "\x1B[0m"
-#define PINK_TEXT "\x1B[35m"
+#include "loading.h"
 
 void remove_endline(char a[])
 {
@@ -24,48 +19,6 @@ void clear_leftover()
     int c;
     while ((c = getchar()) != '\n' && c != EOF)
         ;
-}
-
-void loading(void)
-{
-    int i;
-    int width = 40; // Width of the loading bar
-
-    for (i = 0; i <= width; i++)
-    {
-        // Printing the loading bar
-        printf("\r%s[%s", BLUE_TEXT, RED_TEXT);
-        for (int j = 0; j < i; j++)
-        {
-            printf("=");
-        }
-
-        // Print spaces to clear the previous progress
-        for (int j = i; j < width; j++)
-        {
-            printf(" ");
-        }
-
-        // Print the percentage completion
-        printf("%s] %d%%", BLUE_TEXT, i * 100 / width);
-
-        fflush(stdout);
-        if (i == 20)
-        {
-            usleep(500000);
-        }
-        else if (i < width / 2)
-        {
-            usleep(65000);
-        }
-        else
-        {
-            usleep(20000);
-        }
-    }
-    printf("\n%sLoading Complete!%s\n", GREEN_TEXT, RESET_TEXT);
-    usleep(900000);
-    system("cls");
 }
 
 void admin()

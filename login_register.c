@@ -5,8 +5,6 @@
 #include "loading.h"
 #define ID_PASS_MAX 20
 
-int pass_attempts = 3;
-
 void reg()
 {
     system("cls");
@@ -76,11 +74,12 @@ void reg()
 
 void loginf()
 {
+    int pass_attempts = 3;
     system("cls");
     printf("\t\t\t\t\t\t\tLOG IN\n\n");
     printf("\t\t\t\tSelect account type: \n\n\t\t\t\t(1) Customer\n\t\t\t\t(2) Driver");
     int choice;
-    printf("\n\t\t\t\t>>>");
+    printf("\n\t\t\t\t>>> ");
     scanf("%d", &choice);
     system("cls");
     if (choice == 1)
@@ -117,7 +116,7 @@ void loginf()
                 }
                 else
                 {
-                    for(int i = 60; i > 0; i--)
+                    for (int i = 30; i > 0; i--)
                     {
                         printf("Account temporarily disabled, wait for %d seconds", i);
                         usleep(1000000);
@@ -163,9 +162,9 @@ void loginf()
                 }
                 else
                 {
-                    for(int i = 60; i > 0; i--)
+                    for (int i = 60; i > 0; i--)
                     {
-                        printf("Account temporarily disables, wait for %d seconds", i);
+                        printf("Account temporarily disabled, wait for %d seconds", i);
                         usleep(1000000);
                         system("cls");
                     }
@@ -182,23 +181,24 @@ int main()
     system("cls");
     int ab = 0;
     printf("\t\t\t\t\t\tTRANSPORT MANAGEMENT SYSTEM\n\n");
-    printf("\t\t\t\t(1)Log In\n\n\t\t\t\t(2)Sign Up\n\n\t\t\t\t(3)About\n\n\t\t\t\t");
+    printf("\t\t\t\t(1)Log In\n\n\t\t\t\t(2)Sign Up\n\n\t\t\t\t(3)About\n\n\t\t\t\t(*)Admin");
 strt:
-    scanf("%d", &ab);
+    printf("\n\t\t\t\t>>> ");
+    scanf("%c", &ab);
     switch (ab)
     {
-    case 1:
+    case '1':
     {
         loginf();
         break;
     }
 
-    case 2:
+    case '2':
     {
         reg();
         break;
     }
-    case 3:
+    case '3':
     {
         char credits[1000] = "EndSem Project |Aaditya Sharma |Unmilan Das |Pathya Taya |Swastik Mantri |Suvansh Sharma";
         int key = 0;
@@ -215,6 +215,44 @@ strt:
             fflush(stdout);
             key++;
             usleep(40000);
+        }
+
+        break;
+    }
+    case '*':
+    {
+        int pass_attempts = 3;
+        system("cls");
+        char admin_key[50];
+    adminTry:
+        if (pass_attempts > 0)
+        {
+            pass_attempts--;
+            printf("\t\t\t\t\t\t\tADMIN LOG IN");
+            printf("\n\n\t\t\t\tEnter key: ");
+            scanf("%s", admin_key);
+            if (admin_key == "control@admin12345")
+            {
+                loading();
+                printf("Under construction");
+            }
+            else
+            {
+                printf("\n\t\t\t\tIncorrect key.\n\t\t\t\t%d attempts left.", pass_attempts);
+                usleep(1500000);
+                system("cls");
+                goto adminTry;
+            }
+        }
+        else
+        {
+            for (int i = 60; i > 0; i--)
+            {
+                printf("Account temporarily disabled, redirecting to main menu in %d seconds", i);
+                usleep(1000000);
+                system("cls");
+            }
+            main();
         }
 
         break;
