@@ -429,7 +429,7 @@ void admin()
                     }
                     else
                     {
-                        delDriver("driver_details", del_d.name);
+                        delDriver(&"driver_details", del_d.name);
                         printf("Successfully deleted");
                     }
                 }
