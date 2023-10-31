@@ -402,7 +402,7 @@ void admin()
                     printf("Customer name\tPick up location\tDelivery destination\n");
 
                     // Read and print each line from the CSV file
-                    while (fscanf(fp, "%99[^|]|%99[^|]|%99[^\n]\n", read_o.cus.name, read_o.pick_loc, read_o.del_dest) != EOF)
+                    while (fscanf(file, "%99[^|]|%99[^|]|%99[^\n]\n", read_o.cus.name, read_o.pick_loc, read_o.del_dest) != EOF)
                     {
                         printf("%-10s\t%-19s\t%s\n", read_o.cus.name, read_o.pick_loc, read_o.del_dest);
                     }
@@ -413,7 +413,6 @@ void admin()
                     fgets(del_d.name, 100, stdin);
                     remove_endline(del_d.name);
                     int chck = 0;
-                    fp = fopen("driver_details.csv", "r");
                     while (fscanf(fp, "%99[^|]|%19[^\n]\n", read_d.name, read_d.curr_veh.vehicleNumber) != EOF)
                     {
                         if (strcmp(del_d.name, read_d.name))
@@ -432,7 +431,7 @@ void admin()
                         delDriver("driver_details", del_d.name);
                         printf("Successfully deleted");
                     }
-                                }
+                }
                 clear_leftover();
                 printf("\t\t\t\tPress enter to continue");
                 scanf("%c", &k);
