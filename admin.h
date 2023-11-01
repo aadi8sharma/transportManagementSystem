@@ -29,7 +29,7 @@ void delDriver(const char *filename, const char *nameToDelete)
 
     if (inputFile == NULL || tempFile == NULL)
     {
-        perror("File open error");
+        perror("\t\t\t\tFile open error");
         exit(EXIT_FAILURE);
     }
 
@@ -53,6 +53,57 @@ void delDriver(const char *filename, const char *nameToDelete)
 
     if (remove(filename) != 0)
     {
+        perror("\t\t\t\tError deleting the original file");
+        exit(EXIT_FAILURE);
+    }
+
+    if (rename("temp.csv", filename) != 0)
+    {
+        perror("\t\t\t\tError renaming the temporary file");
+        exit(EXIT_FAILURE);
+    }
+
+    if (found)
+    {
+        printf("\t\t\t\tRecord for driver '%s' deleted successfully.\n", nameToDelete);
+    }
+    else
+    {
+        printf("\t\t\t\tRecord for driver '%s' not found.\n", nameToDelete);
+    }
+}
+
+void del_v(const char *filename, const char *vehicleNumberToDelete)
+{
+    FILE *inputFile = fopen(filename, "r");
+    FILE *tempFile = fopen("temp.csv", "w");
+
+    if (inputFile == NULL || tempFile == NULL)
+    {
+        perror("File open error");
+        exit(EXIT_FAILURE);
+    }
+
+    char vehicleNumber[100]; // Adjust buffer size based on the expected vehicle number length
+    int found = 0;
+
+    while (fscanf(inputFile, " %99[^\n]\n", vehicleNumber) != EOF)
+    {
+        if (strcmp(vehicleNumber, vehicleNumberToDelete) == 0)
+        {
+            found = 1;
+        }
+        else
+        {
+            fprintf(tempFile, "%s\n", vehicleNumber); // Write the line back to the temporary file
+        }
+    }
+
+    fclose(inputFile);
+    fclose(tempFile);
+
+    if (remove(filename) != 0)
+    {
         perror("Error deleting the original file");
         exit(EXIT_FAILURE);
     }
@@ -65,11 +116,11 @@ void delDriver(const char *filename, const char *nameToDelete)
 
     if (found)
     {
-        printf("Record for driver '%s' deleted successfully.\n", nameToDelete);
+        printf("Record for vehicle number '%s' deleted successfully.\n", vehicleNumberToDelete);
     }
     else
     {
-        printf("Record for driver '%s' not found.\n", nameToDelete);
+        printf("Record for vehicle number '%s' not found.\n", vehicleNumberToDelete);
     }
 }
 
@@ -82,6 +133,7 @@ void admin()
     {
         int ch1;
         const char *filename = "driver_details.csv";
+        const char *filename1 = "vehicle_details.csv";
         printf("\t\t\t\t1. Add record\n\t\t\t\t2. View record\n\t\t\t\t3. Delete record\n");
         printf("\t\t\t\tEnter choice :\n\t\t\t\t>>>");
         scanf("%d", &ch1);
@@ -141,23 +193,43 @@ void admin()
                 else
                 {
                     fp = fopen("vehicle_details.csv", "r");
+                    FILE *dfile = fopen("log_driver.csv", "r+");
 
                     // Consume any leftover newline characters
                     clear_leftover();
 
                     // Input driver details from the user
-                    printf("\t\t\t\tEnter Driver's name: ");
-                    fgets(add_d.name, 50, stdin);
+                    printf("\t\t\t\tEnter Driver's ID: ");
+                    fgets(check_d.dlogin.id, ID_PASS_MAX, stdin);
 
-                    remove_endline(add_d.name);
+                    remove_endline(check_d.dlogin.id);
 
-                    if (fp == NULL)
+                    if (fp == NULL || dfile == NULL)
                     {
                         printf("\t\t\t\tError opening the file.\n");
                     }
 
                     else
                     {
+                        int d_id_exists = 0;
+                        while (fscanf(dfile, "%49[^|]|%19[^|]|%19[^\n]\n", add_d.name, add_d.dlogin.id, add_d.dlogin.pass) != EOF)
+                        {
+                            if (strcmp(check_d.dlogin.id, add_d.dlogin.id) == 0)
+                            {
+                                d_id_exists = 1;
+                                break;
+                            }
+                        }
+
+                        if(!d_id_exists)
+                        {
+                            printf("\n\t\t\t\tDriver ID not found, try again.");
+                            usleep(1000000);
+                            printf("\n\n\t\t\t\tPress enter to continue");
+                            scanf("%c", &k);
+                            break;
+
+                        }
                         printf("Vehicle Number\n");
 
                         // Read and print each line from the CSV file
@@ -193,12 +265,14 @@ void admin()
 
                             // Close the file
                             fclose(file);
+                            fclose(dfile);
                             system("cls");
                             loading();
                             printf("\t\t\t\tDriver details added to the CSV file.\n");
                         }
                     }
                 }
+    
                 printf("\t\t\t\tPress enter to continue");
                 scanf("%c", &k);
                 break;
@@ -213,11 +287,39 @@ void admin()
                 else
                 {
                     clear_leftover();
+                    FILE* cfile = fopen("log_customer.csv", "r+");
+                    if(cfile == NULL)
+                    {
+                        system("cls");
+                        printf("Error opening file.");
+                    }
+                    else
+                    {
 
                     // Input vehicle details from the user
-                    printf("\t\t\t\tEnter Customer Number: ");
-                    fgets(add_o.cus.name, 50, stdin);
-                    remove_endline(add_o.cus.name);
+                    printf("\t\t\t\tEnter Customer ID: ");
+                    fgets(add_o.cus.clogin.id, 50, stdin);
+                    remove_endline(check_o.cus.clogin.id);
+
+                    int c_id_exists = 0;
+
+                    while(fscanf(cfile, "%49[^|]|%19[^|]|%19[^\n]\n", add_o.cus.name, add_o.cus.clogin.id, add_o.cus.clogin.pass) != EOF)
+                    {
+                        if(strcmp(check_o.cus.clogin.id, add_o.cus.clogin.id) == 0)
+                        {
+                            c_id_exists = 0;
+                            break;
+                        }
+                    }
+
+                    if(!c_id_exists)
+                    {
+                        printf("\n\t\t\t\tDriver ID not found, try again.");
+                            usleep(1000000);
+                            printf("\n\n\t\t\t\tPress enter to continue");
+                            scanf("%c", &k);
+                            break;
+                    }
 
                     printf("\t\t\t\tEnter Pick up location: ");
                     fgets(add_o.pick_loc, 100, stdin);
@@ -232,9 +334,11 @@ void admin()
 
                     // Close the file
                     fclose(file);
+                    fclose(cfile);
                     system("cls");
                     loading();
                     printf("\t\t\t\tOrder details added to the CSV file.\n");
+                    }
                 }
                 printf("\t\t\t\tPress enter to continue");
                 scanf("%c", &k);
@@ -346,9 +450,9 @@ void admin()
             switch (ch)
             {
             case 1:
-                fp = fopen("vehicle_details.csv", "r");
+                file = fopen("vehicle_details.csv", "r");
 
-                if (fp == NULL)
+                if (file == NULL)
                 {
                     printf("\t\t\t\tError opening the file.\n");
                 }
@@ -358,37 +462,22 @@ void admin()
                     printf("Vehicle Number\n");
 
                     // Read and print each line from the CSV file
-                    while (fscanf(fp, "%19[^|]\n", viewVehicle.vehicleNumber) != EOF)
+                    while (fscanf(file, "%19[^\n]\n", viewVehicle.vehicleNumber) != EOF)
                     {
                         printf("%s\n", viewVehicle.vehicleNumber);
                     }
 
-                    fclose(fp);
+                    fclose(file);
 
                     clear_leftover();
-                    printf("Enter vehicle number of the vehicle to be deleted: ");
-                    fgets(delVehicle.vehicleNumber, 20, stdin);
-                    remove_endline(delVehicle.vehicleNumber);
-                    int chck = 0;
-                    fp = fopen("vehicle_details.csv", "r");
-                    while (fscanf(fp, "%19[^\n]\n", viewVehicle.vehicleNumber) != EOF)
-                    {
-                        if (strcmp(viewVehicle.vehicleNumber, add_d.curr_veh.vehicleNumber) == 0)
-                        {
-                            chck = 1;
-                            break;
-                        }
-                    }
-                    if (chck == 0)
-                    {
-                        printf("\t\t\t\tVehicle not in list\n");
-                    }
+                    printf("\t\t\t\tEnter vehicle number of the vehicle to be deleted: ");
+                    scanf("%s", delVehicle.vehicleNumber);
 
-                    else
-                    {
-                        printf("\t\t\t\tRecord has been deleted");
-                    }
+                    del_v(filename1, delVehicle.vehicleNumber);
                 }
+                clear_leftover();
+                printf("\t\t\t\tPress enter to continue");
+                scanf("%c", &k);
                 break;
             case 2:
 
@@ -411,29 +500,11 @@ void admin()
                     fclose(file);
 
                     clear_leftover();
-                    printf("Enter driver name to be deleted: ");
+                    printf("\t\t\t\tEnter driver name to be deleted: ");
                     fgets(del_d.name, 100, stdin);
                     remove_endline(del_d.name);
-                    int chck = 0;
-                    fp = fopen("driver_details.csv", "r");
-                    while (fscanf(fp, "%99[^|]|%19[^\n]\n", read_d.name, read_d.curr_veh.vehicleNumber) != EOF)
-                    {
-                        if (strcmp(del_d.name, read_d.name))
-                        {
-                            chck = 1;
-                            break;
-                        }
-                    }
-                    fclose(fp);
-                    if (chck == 0)
-                    {
-                        printf("\t\t\t\tDriver not in list\n");
-                    }
-                    else
-                    {
-                        delDriver(filename, del_d.name);
-                        printf("Successfully deleted");
-                    }
+
+                    printf("\t\t\t\tDriver not in list\n");
                 }
                 clear_leftover();
                 printf("\t\t\t\tPress enter to continue");
@@ -442,6 +513,10 @@ void admin()
             default:
                 break;
             }
+        }
+        else
+        {
+            printf("INVALID CHOICE");
         }
 
         system("cls");
