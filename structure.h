@@ -26,6 +26,8 @@ struct Order
     struct Customer cus;
     char pick_loc[100];
     char del_dest[100];
+    char item[100];
+    int quantity;
 } add_o, upd_o, check_o, read_o;
 
 struct Driver

@@ -63,9 +63,9 @@ void add_order()
     add_o.pick_loc[strlen(add_o.pick_loc)-1]='\0';
     //Input of items to be ordered
     printf("Enter the item to be ordered:");
-    fgets(item,2000,stdin);
-    if (item[strlen(item)-1]=='\n')
-    item[strlen(item)-1]='\0';
+    fgets(add_o.item,2000,stdin);
+    if (add_o.item[strlen(add_o.item)-1]=='\n')
+    add_o.item[strlen(add_o.item)-1]='\0';
     //Input of quantity of items to be ordered
     printf("Enter the quantity of the item:");
 
@@ -79,7 +79,7 @@ void add_order()
     
     //Customer order id is taken as 1 greater than index
     record.customer_order_id=index+1;
-    fprintf(ptr1,"%d %s %s %d %s ",record.customer_order_id,add_o.pick_loc,add_o.quantity,add_o.del_dest);
+    fprintf(ptr1,"%d %s %s %d %s ",record.customer_order_id,add_o.pick_loc,add_o.item,add_o.quantity,add_o.del_dest);
     fprintf(ptr1,"\n");
     printf("\nOrder has been placed!\n");
     fclose(ptr1);
