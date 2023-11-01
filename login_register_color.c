@@ -1,11 +1,79 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include "admin.h"
+#include "customer.h"
 #include "admin_login_details.h"
 #define ID_PASS_MAX 20
 int rerun = 0;
+void customer_screen(char cus_id[ID_PASS_MAX])
+{
+    
+        system("cls");
+        t:
+        printf("\n\t\t\t\t\t\t\tChoose an option among the available functions as specified below:\n");
+        printf("\n\n\t\t\t\t1.ADD AN ORDER:\n");
+        printf("\n\t\t\t\t2:VIEW ENTIRE ORDER HISTORY:\n");
+        printf("\n\t\t\t\t3.VIEW A PARTICULAR ORDER HISTORY:\n");
+        printf("\n\t\t\t\t4.DELETE A RECORD:\n");
+        int choice;
+        scanf("%d",&choice);
+        switch (choice)
+        {
+            case 1:
+            {  
+                add_order(cus_id);
+                printf("\nDo you want to make any other changes? If yes type 1 else type 0:");
+                int choice1;
+                scanf("%d",&choice1);
+                if (choice1==1)
+                goto t;
+                break;
+            }
+            case 2:
+            {
+                view_orders(cus_id);
+                printf("\nDo you want to make any other changes? If yes type 1 else type 0:");
+                int choice1;
+                scanf("%d",&choice1);
+                if (choice1==1)
+                goto t;
+                break;
+            }
+            case 3:
+            {
+                char n[2000];
+                printf("Enter customer order id to be searched for:");
+                while (getchar()!='\n');
 
+                fgets(n,2000,stdin);
+                if (n[strlen(n)-1]=='\n')
+                n[strlen(n)-1]='\0';
+                view_order(n);
+                printf("\nDo you want to make any other changes? If yes type 1 else type 0:");
+                int choice1;
+                scanf("%d",&choice1);
+                if (choice1==1)
+                goto t;
+                break;
+            }
+            case 4:
+            {
+                int index;
+                printf("Enter the customer order id of the line to be deleted:");
+                scanf("%d",&index);
+                deleteOrderByOrderNumber(index);
+                printf("\nDo you want to make any other changes? If yes type 1 else type 0:");
+                int choice1;
+                scanf("%d",&choice1);
+                if (choice1==1)
+                goto t;
+                break;
+            }
+            default:
+            {printf("Invalid option chosen\n");
+            goto t;}
+        }
+}
 void reg()
 {
     loading();
@@ -186,8 +254,9 @@ relogin:
                     {
                         printf("\n\t\t\t\t%sKindly wait while we fetch your account%s", YELLOW_TEXT, RESET_TEXT);
                         loading();
-                        printf("Under construction.");
                         fclose(cfile);
+                        customer_screen(add_c.clogin.id);
+                        
                     }
                     else
                     {

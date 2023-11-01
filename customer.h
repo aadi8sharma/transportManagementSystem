@@ -6,22 +6,26 @@
 struct customer_record
 {
     int customer_order_id;
-    char pickup[2000];
-    char item[2000];
-    char destination[2000];
+    char pickup[100];
+    char item[100];
+    char destination[100];
     int quantity;
-}record;
+    char customer_ID[ID_PASS_MAX];
+}record, read_co;
 
-void add_order()
+void add_order(char cus_id[ID_PASS_MAX])
 {    
     FILE *ptr1;
-    ptr1=fopen("File.csv","a+");
+    ptr1=fopen("orders.csv","a+");
     if (ptr1==NULL)
     {
-        printf("Error!");
+        printf("Error opening file.");
     }
+    else
+    {
+    strcpy(record.customer_ID, cus_id);
     int line_count=0;
-    char buffer[2000],ch;
+    char buffer[100],ch;
     fseek(ptr1,0,SEEK_SET);
     //Counting the number of lines in the file already present. 
     while ((ch = fgetc(ptr1)) != EOF) {
@@ -31,19 +35,19 @@ void add_order()
     }
     fseek(ptr1,0,SEEK_SET);
     int index;
-    char buffer1[2000];
+    char buffer1[100];
     if (line_count==0)
     index=line_count;
     else if(line_count==1)
     {
-        fgets(buffer1,2000,ptr1);
+        fgets(buffer1,100,ptr1);
         index=atoi(buffer1);
     }
     else
     {
     for (int i=0;i<line_count-1;i++)
     {
-        fgets(buffer,2000,ptr1);
+        fgets(buffer,100,ptr1);
         fscanf(ptr1,"%s",buffer1);
     }
     index=atoi(buffer1);
@@ -54,16 +58,16 @@ void add_order()
     while ((getchar()) != '\n');
 
 
-    char item[2000],destination[2000],pickup[2000];
+    char item[100],destination[100],pickup[100];
     //Input of the pickup location
     printf("Enter the pickup location:");
-    fgets(add_o.pick_loc,2000,stdin);
+    fgets(add_o.pick_loc,100,stdin);
     //Used to remove the \n inputed during entering of the "pickup" string
     if (add_o.pick_loc[strlen(add_o.pick_loc)-1]=='\n')
     add_o.pick_loc[strlen(add_o.pick_loc)-1]='\0';
     //Input of items to be ordered
     printf("Enter the item to be ordered:");
-    fgets(add_o.item,2000,stdin);
+    fgets(add_o.item,100,stdin);
     if (add_o.item[strlen(add_o.item)-1]=='\n')
     add_o.item[strlen(add_o.item)-1]='\0';
     //Input of quantity of items to be ordered
@@ -73,28 +77,32 @@ void add_order()
     //Input of destination of the order
     printf("Enter the destination:");
     while ((getchar()) != '\n');
-    fgets(add_o.del_dest,2000,stdin);
+    fgets(add_o.del_dest,100,stdin);
     if (add_o.del_dest[strlen(add_o.del_dest)-1]=='\n')
     add_o.del_dest[strlen(add_o.del_dest)-1]='\0';
     
     //Customer order id is taken as 1 greater than index
     record.customer_order_id=index+1;
-    fprintf(ptr1,"%d %s %s %d %s ",record.customer_order_id,add_o.pick_loc,add_o.item,add_o.quantity,add_o.del_dest);
+    fprintf(ptr1,"%d|%s|%s|%d|%s|%s\n",record.customer_order_id,add_o.pick_loc,add_o.item,add_o.quantity,add_o.del_dest, record.customer_ID);
     fprintf(ptr1,"\n");
     printf("\nOrder has been placed!\n");
     fclose(ptr1);
+    }
 }
 
-void view_orders()
+void view_orders(char cus_id[ID_PASS_MAX])
 {
-    FILE *ptr=fopen("File.csv","r");
-    char ch;
-    do
+    FILE *ptr=fopen("orders.csv","r+");
+    system("cls");
+    printf("\n\t\t\t\t\t\t\tYOUR ORDERS");
+    printf("\n\n\tOrder ID\t\tPickup Location\t\tItem Name\t\tQuantity\t\tDestination\n\n");
+    while(fscanf(ptr, "%d|%99[^|]|%99[^|]|%d|%99[^|]|%19[^\n]\n", &read_co.customer_order_id, read_co.pickup, read_co.item, &read_co.quantity, read_co.destination, read_co.customer_ID) != EOF)
     {
-        ch=fgetc(ptr);
-        printf("%c",ch);
-    } while (ch!=EOF);
-    
+        if(strcmp(cus_id, read_co.customer_ID) == 0)
+        {
+            printf("\t%d\t\t%s\t\t%s\t\t%d\t\t%s\n", read_co.customer_order_id, read_co.pickup, read_co.item, read_co.quantity, read_co.destination);
+        }
+    }
 }
 
 void view_order(char index[2000])
@@ -174,78 +182,10 @@ void deleteOrderByOrderNumber(int orderNumber) {
     if (found == 0) {
         printf("Order number not found in the file.\n");
     } else {
-        remove("File.csv"); // Delete the original file
-        rename("Temp.csv", "File.csv"); // Rename the temp file to the original file
+        remove("orders.csv"); // Delete the original file
+        rename("Temp.csv", "orders.csv"); // Rename the temp file to the original file
         printf("Order successfully deleted.\n");
     }
 }
 
 
-int main()
-    {
-        t:
-        printf("Choose an option among the available functions as specified below:\n");
-        printf("1.ADD AN ORDER:\n");
-        printf("2:VIEW ENTIRE ORDER HISTORY:\n");
-        printf("3.VIEW A PARTICULAR ORDER HISTORY:\n");
-        printf("4.DELETE A RECORD:\n");
-        int choice;
-        scanf("%d",&choice);
-        switch (choice)
-        {
-            case 1:
-            {  
-                add_order();
-                printf("\nDo you want to make any other changes? If yes type 1 else type 0:");
-                int choice1;
-                scanf("%d",&choice1);
-                if (choice1==1)
-                goto t;
-                break;
-            }
-            case 2:
-            {
-                view_orders();
-                printf("\nDo you want to make any other changes? If yes type 1 else type 0:");
-                int choice1;
-                scanf("%d",&choice1);
-                if (choice1==1)
-                goto t;
-                break;
-            }
-            case 3:
-            {
-                char n[2000];
-                printf("Enter customer order id to be searched for:");
-                while (getchar()!='\n');
-
-                fgets(n,2000,stdin);
-                if (n[strlen(n)-1]=='\n')
-                n[strlen(n)-1]='\0';
-                view_order(n);
-                printf("\nDo you want to make any other changes? If yes type 1 else type 0:");
-                int choice1;
-                scanf("%d",&choice1);
-                if (choice1==1)
-                goto t;
-                break;
-            }
-            case 4:
-            {
-                int index;
-                printf("Enter the customer order id of the line to be deleted:");
-                scanf("%d",&index);
-                deleteOrderByOrderNumber(index);
-                printf("\nDo you want to make any other changes? If yes type 1 else type 0:");
-                int choice1;
-                scanf("%d",&choice1);
-                if (choice1==1)
-                goto t;
-                break;
-            }
-            default:
-            {printf("Invalid option chosen\n");
-            goto t;}
-        }
-        return 0;
-    }
