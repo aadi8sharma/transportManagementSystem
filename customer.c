@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include "admin.h"
+
 struct customer_record
 {
     int customer_order_id;
@@ -55,10 +57,10 @@ void add_order()
     char item[2000],destination[2000],pickup[2000];
     //Input of the pickup location
     printf("Enter the pickup location:");
-    fgets(pickup,2000,stdin);
+    fgets(add_o.pick_loc,2000,stdin);
     //Used to remove the \n inputed during entering of the "pickup" string
-    if (pickup[strlen(pickup)-1]=='\n')
-    pickup[strlen(pickup)-1]='\0';
+    if (add_o.pick_loc[strlen(add_o.pick_loc)-1]=='\n')
+    add_o.pick_loc[strlen(add_o.pick_loc)-1]='\0';
     //Input of items to be ordered
     printf("Enter the item to be ordered:");
     fgets(item,2000,stdin);
@@ -66,22 +68,18 @@ void add_order()
     item[strlen(item)-1]='\0';
     //Input of quantity of items to be ordered
     printf("Enter the quantity of the item:");
-    int quantity;
-    scanf("%d",&quantity); 
+
+    scanf("%d",&add_o.quantity); 
     //Input of destination of the order
     printf("Enter the destination:");
     while ((getchar()) != '\n');
-    fgets(destination,2000,stdin);
-    if (destination[strlen(destination)-1]=='\n')
-    destination[strlen(destination)-1]='\0';
-    //Values are copied onto the struct record
-    strcpy(record.pickup,pickup);
-    strcpy(record.destination,destination);
-    strcpy(record.item,item);
-    record.quantity=quantity;
+    fgets(add_o.del_dest,2000,stdin);
+    if (add_o.del_dest[strlen(add_o.del_dest)-1]=='\n')
+    add_o.del_dest[strlen(add_o.del_dest)-1]='\0';
+    
     //Customer order id is taken as 1 greater than index
     record.customer_order_id=index+1;
-    fprintf(ptr1,"%d %s %s %d %s ",record.customer_order_id,record.pickup,record.item,record.quantity,record.destination);
+    fprintf(ptr1,"%d %s %s %d %s ",record.customer_order_id,add_o.pick_loc,add_o.quantity,add_o.del_dest);
     fprintf(ptr1,"\n");
     printf("\nOrder has been placed!\n");
     fclose(ptr1);
