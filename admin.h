@@ -211,12 +211,24 @@ void admin()
 
                     else
                     {
+                        int d_id_exists = 0;
                         while (fscanf(dfile, "%49[^|]|%19[^|]|%19[^\n]\n", add_d.name, add_d.dlogin.id, add_d.dlogin.pass) != EOF)
                         {
-                            if (check_d.dlogin.id == add_d.dlogin.id)
+                            if (strcmp(check_d.dlogin.id, add_d.dlogin.id) == 0)
                             {
+                                d_id_exists = 1;
                                 break;
                             }
+                        }
+
+                        if(!d_id_exists)
+                        {
+                            printf("\n\t\t\t\tDriver ID not found, try again.");
+                            usleep(1000000);
+                            printf("\n\n\t\t\t\tPress enter to continue");
+                            scanf("%c", &k);
+                            break;
+
                         }
                         printf("Vehicle Number\n");
 
@@ -260,6 +272,7 @@ void admin()
                         }
                     }
                 }
+    
                 printf("\t\t\t\tPress enter to continue");
                 scanf("%c", &k);
                 break;
@@ -274,11 +287,39 @@ void admin()
                 else
                 {
                     clear_leftover();
+                    FILE* cfile = fopen("log_customer.csv", "r+");
+                    if(cfile == NULL)
+                    {
+                        system("cls");
+                        printf("Error opening file.");
+                    }
+                    else
+                    {
 
                     // Input vehicle details from the user
-                    printf("\t\t\t\tEnter Customer Number: ");
-                    fgets(add_o.cus.name, 50, stdin);
-                    remove_endline(add_o.cus.name);
+                    printf("\t\t\t\tEnter Customer ID: ");
+                    fgets(add_o.cus.clogin.id, 50, stdin);
+                    remove_endline(check_o.cus.clogin.id);
+
+                    int c_id_exists = 0;
+
+                    while(fscanf(cfile, "%49[^|]|%19[^|]|%19[^\n]\n", add_o.cus.name, add_o.cus.clogin.id, add_o.cus.clogin.pass) != EOF)
+                    {
+                        if(strcmp(check_o.cus.clogin.id, add_o.cus.clogin.id) == 0)
+                        {
+                            c_id_exists = 0;
+                            break;
+                        }
+                    }
+
+                    if(!c_id_exists)
+                    {
+                        printf("\n\t\t\t\tDriver ID not found, try again.");
+                            usleep(1000000);
+                            printf("\n\n\t\t\t\tPress enter to continue");
+                            scanf("%c", &k);
+                            break;
+                    }
 
                     printf("\t\t\t\tEnter Pick up location: ");
                     fgets(add_o.pick_loc, 100, stdin);
@@ -293,9 +334,11 @@ void admin()
 
                     // Close the file
                     fclose(file);
+                    fclose(cfile);
                     system("cls");
                     loading();
                     printf("\t\t\t\tOrder details added to the CSV file.\n");
+                    }
                 }
                 printf("\t\t\t\tPress enter to continue");
                 scanf("%c", &k);
