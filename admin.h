@@ -343,6 +343,7 @@ void admin()
                 break;
             case 3:
                 char ch;
+                fp=fopen("orders.csv","r");
                 fseek(fp,0,SEEK_SET);
                 while ((ch=fgetc(fp))!=EOF)
                 printf("%c",&ch);
