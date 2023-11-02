@@ -332,7 +332,7 @@ void admin()
                     printf("Driver ID\t\tDriver name\t\tCurrent Vehicle\n");
 
                     // Read and print each line from the CSV file
-                    while (fscanf(fp, "%99[^|]|%99[^|]|%19[^\n]\n",read_d.dlogin.id, read_d.name, read_d.curr_veh.vehicleNumber) != EOF)
+                    while (fscanf(fp, "%19[^|]|%49[^|]|%19[^\n]\n",read_d.dlogin.id, read_d.name, read_d.curr_veh.vehicleNumber) != EOF)
                     {
                         printf("%-15s\t%12s\t%10s\n",read_d.dlogin.id, read_d.name, read_d.curr_veh.vehicleNumber);
                     }
@@ -342,16 +342,23 @@ void admin()
                 scanf("%c", &k);
                 break;
             case 3:
-                char ch;
-                fp=fopen("orders.csv","r");
-                fseek(fp,0,SEEK_SET);
-                while ((ch=fgetc(fp))!=EOF)
+                fp = fopen("orders.csv", "r");
+
+                if (fp == NULL)
                 {
-                    if (ch!='|');
-                    printf("%c",&ch);
-                    continue;
+                    printf("\t\t\t\tError opening the file.\n");
                 }
-                fclose(fp);
+
+                else
+                {
+                    printf("Customer order ID\tPick up location\tItem\tDestination\tQuantity\tCustomer ID\n");
+
+                    // Read and print each line from the CSV file
+                    while (fscanf(fp, "%d|%99[^|]|%99[^|]|%99[^|]|%d|%99[^\n]\n", &read_co.customer_order_id, read_co.pickup, read_co.item,read_co.destination,&read_co.quantity,read_co.customer_ID) != EOF)
+                    {
+                        printf("%d\t%s\t%-10s\t%-19s\t%d\t%s\n", read_co.customer_order_id, read_co.pickup, read_co.item,read_co.destination,read_co.quantity,read_co.customer_ID);
+                    }
+                }
                 clear_leftover();
                 printf("\n\t\t\t\tPress enter to continue");
                 scanf("%c", &k);
