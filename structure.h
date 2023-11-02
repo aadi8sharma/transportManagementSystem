@@ -36,3 +36,13 @@ struct Driver
     struct LoginDetails dlogin;
     struct Vehicle curr_veh;
 } add_d, check_d, upd_d, read_d, del_d;
+
+struct customer_record
+{
+    int customer_order_id;
+    char pickup[100];
+    char item[100];
+    char destination[100];
+    int quantity;
+    char customer_ID[ID_PASS_MAX];
+}record, read_co;
