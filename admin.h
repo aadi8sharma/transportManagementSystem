@@ -351,7 +351,8 @@ void admin()
                     printf("%c",&ch);
                     continue;
                 }
-                clear_leftover();
+                fclose(fp);
+                //clear_leftover();
                 printf("\n\t\t\t\tPress enter to continue");
                 scanf("%c", &k);
                 break;
