@@ -289,7 +289,7 @@ void admin()
         {
 
             int ch;
-            printf("\t\t\t\t1. Vehicle details\n\t\t\t\t2. Driver details\n\t\t\t\t3. Oreder details\n");
+            printf("\t\t\t\t1. Vehicle details\n\t\t\t\t2. Driver details\n\t\t\t\t3. Order details\n");
             printf("\t\t\t\tEnter choice :\n\t\t\t\t>>>");
             scanf("%d", &ch);
             system("cls");
@@ -342,7 +342,7 @@ void admin()
                 scanf("%c", &k);
                 break;
             case 3:
-                fp = fopen("order.csv", "r");
+                fp = fopen("orders.csv", "r");
 
                 if (fp == NULL)
                 {
@@ -375,7 +375,7 @@ void admin()
         if (ch1 == 3)
         {
             int ch;
-            printf("\t\t\t\t1. Vehicle details\n\t\t\t\t2. Driver details\n\t\t\t\t3. Oreder details\n");
+            printf("\t\t\t\t1. Vehicle details\n\t\t\t\t2. Driver details\n\t\t\t\t3. Order details\n");
             printf("\t\t\t\tEnter choice :\n\t\t\t\t>>>");
             scanf("%d", &ch);
             system("cls");
