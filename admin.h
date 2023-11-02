@@ -193,7 +193,7 @@ void admin()
                 }
                 else
                 {
-                    fp = fopen("vehicle_details.csv", "r");
+                    fp = fopen("vehicle_details.csv", "r+");
                     FILE *dfile = fopen("log_driver.csv", "r+");
 
                     // Consume any leftover newline characters
@@ -262,7 +262,7 @@ void admin()
                         {
 
                             // Write the details to the CSV file
-                            fprintf(file, "%s|%s|%s\n",check_d.dlogin.id,add_d.name, add_d.curr_veh.vehicleNumber);
+                            fprintf(file, "%s|%s|%s|%d\n",check_d.dlogin.id,add_d.name, add_d.curr_veh.vehicleNumber, NULL);
 
                             // Close the file
                             fclose(file);
@@ -320,7 +320,7 @@ void admin()
                 scanf("%c", &k);
                 break;
             case 2:
-                fp = fopen("driver_details.csv", "r");
+                fp = fopen("driver_details.csv", "r+");
 
                 if (fp == NULL)
                 {
@@ -354,9 +354,9 @@ void admin()
                     printf("Customer order ID\tPick up location\tItem\tDestination\tQuantity\tCustomer ID\n");
 
                     // Read and print each line from the CSV file
-                    while (fscanf(fp, "%d|%99[^|]|%99[^|]|%99[^|]|%d|%99[^\n]\n", &read_co.customer_order_id, read_co.pickup, read_co.item,read_co.destination,&read_co.quantity,read_co.customer_ID) != EOF)
+                    while (fscanf(fp, "%d|%99[^|]|%99[^|]|%d|%99[^|]|%99[^\n]\n", &read_co.customer_order_id, read_co.pickup, read_co.item,&read_co.quantity,read_co.destination,read_co.customer_ID) != EOF)
                     {
-                        printf("%d\t%s\t%-10s\t%-19s\t%d\t%s\n", read_co.customer_order_id, read_co.pickup, read_co.item,read_co.destination,read_co.quantity,read_co.customer_ID);
+                        printf("%d\t%s\t%-10s\t%d\t%-19s\t%s\n",read_co.customer_order_id, read_co.pickup, read_co.item,read_co.quantity,read_co.destination,read_co.customer_ID);
                     }
                 }
                 clear_leftover();
@@ -456,4 +456,31 @@ void admin()
         printf("\t\t\t\tPress 0 to exit and 1 to continue: ");
         scanf("%hi", &x);
     }
+}
+
+void assign_order(int order_ID)
+{
+    FILE* ddetails = fopen("driver_details.csv", "r+");
+    FILE* temp = fopen("Temp.csv","w");
+    char buffer[100];
+    char id_[100],name_[100];
+    int vechileno_,orderid_;
+    while (fgets(buffer,100,ddetails)!=NULL)
+    {
+        buffer[strlen(buffer)-1]='\0';
+        sscanf(buffer,"%99[^|]|%99[^|]|%d|%d\n",id_,name_,&vechileno_,&orderid_);
+        if (orderid_==0)
+        {
+            orderid_=order_ID;
+            fprintf(temp,"%s|%s|%d|%d",id_,name_,vechileno_,orderid_);
+        }
+        else
+        {
+            fprintf(temp, "%s\n", buffer);
+        }
+    }
+    fclose(ddetails);
+    fclose(temp);
+    remove("driver_details.csv");
+    rename("Temp.csv","driver_details.csv");
 }
