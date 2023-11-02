@@ -35,9 +35,10 @@ void delDriver(const char *filename, const char *nameToDelete)
 
     char driverName[100];    // Adjust buffer size based on the expected driver name length
     char vehicleNumber[100]; // Adjust buffer size based on the expected vehicle number length
+    char driverID[100];
     int found = 0;
 
-    while (fscanf(inputFile, " %99[^|]|%99[^|\n]\n", driverName, vehicleNumber) != EOF)
+    while (fscanf(inputFile, " %99[^|]|%99[^|]|%99[^|\n]\n",driverID, driverName, vehicleNumber) != EOF)
     {
         if (strcmp(driverName, nameToDelete) == 0)
         {
@@ -45,7 +46,7 @@ void delDriver(const char *filename, const char *nameToDelete)
             continue; // Skip this line (record to be deleted)
         }
 
-        fprintf(tempFile, "%s|%s\n", driverName, vehicleNumber); // Write the line back to the temporary file
+        fprintf(tempFile, "%s|%s|%s\n",driverID, driverName, vehicleNumber); // Write the line back to the temporary file
     }
 
     fclose(inputFile);
@@ -141,7 +142,7 @@ void admin()
         if (ch1 == 1)
         {
             int ch;
-            printf("\t\t\t\t1. Vehicle details\n\t\t\t\t2. Driver details\n\t\t\t\t3. Order details\n");
+            printf("\t\t\t\t1. Vehicle details\n\t\t\t\t2. Driver details\n");
             printf("\t\t\t\tEnter choice :\n>>>");
             scanf("%d", &ch);
             system("cls");
@@ -192,7 +193,7 @@ void admin()
                 }
                 else
                 {
-                    fp = fopen("vehicle_details.csv", "r");
+                    fp = fopen("vehicle_details.csv", "r+");
                     FILE *dfile = fopen("log_driver.csv", "r+");
 
                     // Consume any leftover newline characters
@@ -261,7 +262,7 @@ void admin()
                         {
 
                             // Write the details to the CSV file
-                            fprintf(file, "%s|%s\n", add_d.name, add_d.curr_veh.vehicleNumber);
+                            fprintf(file, "%s|%s|%s|%d\n",check_d.dlogin.id,add_d.name, add_d.curr_veh.vehicleNumber, NULL);
 
                             // Close the file
                             fclose(file);
@@ -276,74 +277,6 @@ void admin()
                 printf("\t\t\t\tPress enter to continue");
                 scanf("%c", &k);
                 break;
-            case 3:
-                // Open the CSV file in append mode
-                file = fopen("order_details.csv", "a");
-
-                if (file == NULL)
-                {
-                    printf("\t\t\t\tError opening the file.\n");
-                }
-                else
-                {
-                    clear_leftover();
-                    FILE* cfile = fopen("log_customer.csv", "r+");
-                    if(cfile == NULL)
-                    {
-                        system("cls");
-                        printf("Error opening file.");
-                    }
-                    else
-                    {
-
-                    // Input vehicle details from the user
-                    printf("\t\t\t\tEnter Customer ID: ");
-                    fgets(add_o.cus.clogin.id, 50, stdin);
-                    remove_endline(check_o.cus.clogin.id);
-
-                    int c_id_exists = 0;
-
-                    while(fscanf(cfile, "%49[^|]|%19[^|]|%19[^\n]\n", add_o.cus.name, add_o.cus.clogin.id, add_o.cus.clogin.pass) != EOF)
-                    {
-                        if(strcmp(check_o.cus.clogin.id, add_o.cus.clogin.id) == 0)
-                        {
-                            c_id_exists = 0;
-                            break;
-                        }
-                    }
-
-                    if(!c_id_exists)
-                    {
-                        printf("\n\t\t\t\tDriver ID not found, try again.");
-                            usleep(1000000);
-                            printf("\n\n\t\t\t\tPress enter to continue");
-                            scanf("%c", &k);
-                            break;
-                    }
-
-                    printf("\t\t\t\tEnter Pick up location: ");
-                    fgets(add_o.pick_loc, 100, stdin);
-                    remove_endline(add_o.pick_loc);
-
-                    printf("\t\t\t\tEnter Delivery location: ");
-                    fgets(add_o.del_dest, 100, stdin);
-                    remove_endline(add_o.del_dest);
-
-                    // Write the details to the CSV file
-                    fprintf(file, "%s|%s|%s\n", add_o.cus.name, add_o.pick_loc, add_o.del_dest);
-
-                    // Close the file
-                    fclose(file);
-                    fclose(cfile);
-                    system("cls");
-                    loading();
-                    printf("\t\t\t\tOrder details added to the CSV file.\n");
-                    }
-                }
-                printf("\t\t\t\tPress enter to continue");
-                scanf("%c", &k);
-                break;
-
             default:
                 clear_leftover();
                 printf("\t\t\t\tWrong choice...\n");
@@ -356,7 +289,7 @@ void admin()
         {
 
             int ch;
-            printf("\t\t\t\t1. Vehicle details\n\t\t\t\t2. Driver details\n\t\t\t\t3. Oreder details\n");
+            printf("\t\t\t\t1. Vehicle details\n\t\t\t\t2. Driver details\n\t\t\t\t3. Order details\n");
             printf("\t\t\t\tEnter choice :\n\t\t\t\t>>>");
             scanf("%d", &ch);
             system("cls");
@@ -387,7 +320,7 @@ void admin()
                 scanf("%c", &k);
                 break;
             case 2:
-                fp = fopen("driver_details.csv", "r");
+                fp = fopen("driver_details.csv", "r+");
 
                 if (fp == NULL)
                 {
@@ -396,12 +329,12 @@ void admin()
 
                 else
                 {
-                    printf("Driver name\t\tCurrent Vehicle\n");
+                    printf("Driver ID\t\tDriver name\t\tCurrent Vehicle\n");
 
                     // Read and print each line from the CSV file
-                    while (fscanf(fp, "%99[^|]|%19[^\n]\n", read_d.name, read_d.curr_veh.vehicleNumber) != EOF)
+                    while (fscanf(fp, "%19[^|]|%49[^|]|%19[^\n]\n",read_d.dlogin.id, read_d.name, read_d.curr_veh.vehicleNumber) != EOF)
                     {
-                        printf("%-15s\t%12s\n", read_d.name, read_d.curr_veh.vehicleNumber);
+                        printf("%-15s\t%12s\t%10s\n",read_d.dlogin.id, read_d.name, read_d.curr_veh.vehicleNumber);
                     }
                 }
                 clear_leftover();
@@ -409,7 +342,7 @@ void admin()
                 scanf("%c", &k);
                 break;
             case 3:
-                fp = fopen("order_details.csv", "r");
+                fp = fopen("orders.csv", "r");
 
                 if (fp == NULL)
                 {
@@ -418,12 +351,12 @@ void admin()
 
                 else
                 {
-                    printf("Customer name\tPick up location\tDelivery destination\n");
+                    printf("Customer order ID\tPick up location\tItem\tDestination\tQuantity\tCustomer ID\n");
 
                     // Read and print each line from the CSV file
-                    while (fscanf(fp, "%99[^|]|%99[^|]|%99[^\n]\n", read_o.cus.name, read_o.pick_loc, read_o.del_dest) != EOF)
+                    while (fscanf(fp, "%d|%99[^|]|%99[^|]|%d|%99[^|]|%99[^\n]\n", &read_co.customer_order_id, read_co.pickup, read_co.item,&read_co.quantity,read_co.destination,read_co.customer_ID) != EOF)
                     {
-                        printf("%-10s\t%-19s\t%s\n", read_o.cus.name, read_o.pick_loc, read_o.del_dest);
+                        printf("%d\t%s\t%-10s\t%d\t%-19s\t%s\n",read_co.customer_order_id, read_co.pickup, read_co.item,read_co.quantity,read_co.destination,read_co.customer_ID);
                     }
                 }
                 clear_leftover();
@@ -442,7 +375,7 @@ void admin()
         if (ch1 == 3)
         {
             int ch;
-            printf("\t\t\t\t1. Vehicle details\n\t\t\t\t2. Driver details\n\t\t\t\t3. Oreder details\n");
+            printf("\t\t\t\t1. Vehicle details\n\t\t\t\t2. Driver details\n\t\t\t\t3. Order details\n");
             printf("\t\t\t\tEnter choice :\n\t\t\t\t>>>");
             scanf("%d", &ch);
             system("cls");
@@ -523,4 +456,31 @@ void admin()
         printf("\t\t\t\tPress 0 to exit and 1 to continue: ");
         scanf("%hi", &x);
     }
+}
+
+void assign_order(int order_ID)
+{
+    FILE* ddetails = fopen("driver_details.csv", "r+");
+    FILE* temp = fopen("Temp.csv","w");
+    char buffer[100];
+    char id_[100],name_[100];
+    int vechileno_,orderid_;
+    while (fgets(buffer,100,ddetails)!=NULL)
+    {
+        buffer[strlen(buffer)-1]='\0';
+        sscanf(buffer,"%99[^|]|%99[^|]|%d|%d\n",id_,name_,&vechileno_,&orderid_);
+        if (orderid_==0)
+        {
+            orderid_=order_ID;
+            fprintf(temp,"%s|%s|%d|%d",id_,name_,vechileno_,orderid_);
+        }
+        else
+        {
+            fprintf(temp, "%s\n", buffer);
+        }
+    }
+    fclose(ddetails);
+    fclose(temp);
+    remove("driver_details.csv");
+    rename("Temp.csv","driver_details.csv");
 }

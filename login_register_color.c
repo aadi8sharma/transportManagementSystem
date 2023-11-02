@@ -5,16 +5,26 @@
 #include "admin_login_details.h"
 #define ID_PASS_MAX 20
 int rerun = 0;
+
 void customer_screen(char cus_id[ID_PASS_MAX])
 {
     
-        system("cls");
+        system("clear");
         t:
-        printf("\n\t\t\t\t\t\t\tChoose an option among the available functions as specified below:\n");
-        printf("\n\n\t\t\t\t1.ADD AN ORDER:\n");
-        printf("\n\t\t\t\t2:VIEW ENTIRE ORDER HISTORY:\n");
-        printf("\n\t\t\t\t3.VIEW A PARTICULAR ORDER HISTORY:\n");
-        printf("\n\t\t\t\t4.DELETE A RECORD:\n");
+        FILE* f = fopen("log_customer.csv", "r+");
+        while(fscanf(f, "%49[^|]|%19[^|]|%19[^\n]\n", read_c.name, read_c.clogin.id, read_c.clogin.pass) != EOF)
+        {
+            if(strcmp(read_c.clogin.id, cus_id) == 0)
+            {
+                break;
+            }
+        }
+        printf("\n\t\t\t\t\t\t\t%s%s's Account%s\n\n", BCYN, read_c.name, RESET_TEXT);
+        printf("\n\n\t\t\t\t%s(1) Place Order\n", CYAN_TEXT);
+        printf("\n\t\t\t\t(2) Order History\n");
+        printf("\n\t\t\t\t(3) Find Order\n");
+        printf("\n\t\t\t\t(4) Delete Record\n%s", RESET_TEXT);
+        fclose(f);
         int choice;
         scanf("%d",&choice);
         switch (choice)
@@ -74,6 +84,8 @@ void customer_screen(char cus_id[ID_PASS_MAX])
             goto t;}
         }
 }
+
+
 void reg()
 {
     loading();
@@ -209,6 +221,7 @@ rereg:
     }
 }
 
+
 void loginf()
 {
     loading();
@@ -217,7 +230,7 @@ relogin:
     pass_attempts = 3;
 
     printf("\t\t\t\t\t\t\t%sLOG IN%s\n\n", BCYN, RESET_TEXT);
-    printf("\t\t\t\t%sSelect account type:%s \n\n\t\t\t\t%s(1) Customer\n\t\t\t\t(2) Driver%s\n", BYEL, RESET_TEXT, BLUE_TEXT, RESET_TEXT);
+    printf("\t\t\t\t%sSelect account type:%s \n\n\t\t\t\t%s(1) Customer\n\t\t\t\t(2) Driver\n\t\t\t\t(3) Exit%s\n", BYEL, RESET_TEXT, BLUE_TEXT, RESET_TEXT);
     int choice;
     printf("%s", GREEN_TEXT);
     enter(">>>", 4);
@@ -229,7 +242,6 @@ relogin:
     {
         FILE *cfile = fopen("log_customer.csv", "r");
 
-        // printf("\n\t\t\t\tEnter log in id: ");
         enter("Username : ", 4);
 
         scanf("%s", check_c.clogin.id);
@@ -241,7 +253,7 @@ relogin:
             if (strcmp(add_c.clogin.id, check_c.clogin.id) == 0)
             {
                 exists = 1;
-            tryPass_C:
+             tryPass_C:
                 if (pass_attempts > 0)
                 {
                     // printf("\n\t\t\t\tEnter password: ");
@@ -286,6 +298,7 @@ relogin:
         {
             printf("\t\t\t\t%sINVALID CHOICE%s\n", RED_TEXT, RESET_TEXT);
             usleep(2000000);
+            system("clear");
             goto relogin;
         }
     }
@@ -293,7 +306,6 @@ relogin:
     {
         FILE *dfile = fopen("log_driver.csv", "r");
 
-        // printf("\n\t\t\t\tEnter log in id: ");
         enter("Username : ", 4);
 
         scanf("%s", check_d.dlogin.id);
@@ -346,6 +358,7 @@ relogin:
         {
             printf("\t\t\t\t%sINVALID CHOICE%s\n", RED_TEXT, RESET_TEXT);
             usleep(2000000);
+            system("clear");
             goto relogin;
         }
     }
@@ -357,9 +370,11 @@ relogin:
     {
         printf("\t\t\t\t%sINVALID CHOICE%s\n", RED_TEXT, RESET_TEXT);
         usleep(2000000);
+        system("clear");
         goto relogin;
     }
 }
+
 
 int main()
 {
