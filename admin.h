@@ -342,23 +342,10 @@ void admin()
                 scanf("%c", &k);
                 break;
             case 3:
-                fp = fopen("orders.csv", "r");
-
-                if (fp == NULL)
-                {
-                    printf("\t\t\t\tError opening the file.\n");
-                }
-
-                else
-                {
-                    printf("Customer order ID\tPick up location\tItem\tDestination\tQuantity\tCustomer ID\n");
-
-                    // Read and print each line from the CSV file
-                    while (fscanf(fp, "%d|%99[^|]|%99[^|]|%99[^|]|%d|%99[^\n]\n", &read_co.customer_order_id, read_co.pickup, read_co.item,read_co.destination,&read_co.quantity,read_co.customer_ID) != EOF)
-                    {
-                        printf("%d\t%s\t%-10s\t%-19s\t%d\t%s\n", read_co.customer_order_id, read_co.pickup, read_co.item,read_co.destination,read_co.quantity,read_co.customer_ID);
-                    }
-                }
+                char ch;
+                fseek(fp,0,SEEK_SET);
+                while ((ch=fgetc(fp))!=EOF)
+                printf("%c",ch);
                 clear_leftover();
                 printf("\n\t\t\t\tPress enter to continue");
                 scanf("%c", &k);
