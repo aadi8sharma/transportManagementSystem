@@ -352,7 +352,7 @@ void admin()
                     continue;
                 }
                 fclose(fp);
-                //clear_leftover();
+                clear_leftover();
                 printf("\n\t\t\t\tPress enter to continue");
                 scanf("%c", &k);
                 break;
