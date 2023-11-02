@@ -345,7 +345,7 @@ void admin()
                 char ch;
                 fseek(fp,0,SEEK_SET);
                 while ((ch=fgetc(fp))!=EOF)
-                printf("%c",ch);
+                printf("%c",&ch);
                 clear_leftover();
                 printf("\n\t\t\t\tPress enter to continue");
                 scanf("%c", &k);
