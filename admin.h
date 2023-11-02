@@ -346,7 +346,11 @@ void admin()
                 fp=fopen("orders.csv","r");
                 fseek(fp,0,SEEK_SET);
                 while ((ch=fgetc(fp))!=EOF)
-                printf("%c",&ch);
+                {
+                    if (ch!='|');
+                    printf("%c",&ch);
+                    continue;
+                }
                 clear_leftover();
                 printf("\n\t\t\t\tPress enter to continue");
                 scanf("%c", &k);
