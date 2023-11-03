@@ -5,13 +5,12 @@
 #include "admin_login_details.h"
 #define ID_PASS_MAX 20
 int rerun = 0;
-//#define cls 'clear';
 
 void customer_screen(char cus_id[ID_PASS_MAX])
 {
     
-        system("clear");
-        t: system("clear");
+        system("cls");
+        t: system("cls");
      FILE* f = fopen("log_customer.csv", "r+");
         // FILE* f = fopen("log_customer.csv", "r+");
         while(fscanf(f, "%49[^|]|%19[^|]|%19[^\n]\n", read_c.name, read_c.clogin.id, read_c.clogin.pass) != EOF)
@@ -51,7 +50,7 @@ void customer_screen(char cus_id[ID_PASS_MAX])
                 scanf("%d",&choice1);
                 if (choice1==1)
                 goto t;
-                else { system("clear");
+                else { system("cls");
                 printf("\n\t\t\t\t%sGOODBYE!", BWHT); }
                 break;
             }
@@ -65,14 +64,14 @@ void customer_screen(char cus_id[ID_PASS_MAX])
                 scanf("%d",&choice1);
                 if (choice1==1)
                 goto t;
-                else { system("clear");
+                else { system("cls");
                 printf("\n\t\t\t\t%sGOODBYE!", BWHT); }
                 break;
             }
             case 3:
             {
                 char n[2000];
-                system("clear");
+                system("cls");
                 printf("\n\t\t\t\t%sEnter customer order id to be searched for : %s", YELLOW_TEXT,RESET_TEXT);
                 while (getchar()!='\n');
 
@@ -88,7 +87,7 @@ void customer_screen(char cus_id[ID_PASS_MAX])
                 scanf("%d",&choice1);
                 if (choice1==1)
                 goto t;
-                else { system("clear");
+                else { system("cls");
                 printf("\n\t\t\t\t%sGOODBYE!", BWHT); }
                 break;
             }
@@ -106,7 +105,7 @@ void customer_screen(char cus_id[ID_PASS_MAX])
                 scanf("%d",&choice1);
                 if (choice1==1)
                 goto t;
-                else { system("clear");
+                else { system("cls");
                 printf("\n\t\t\t\t%sGOODBYE!", BWHT); }
                 break;
             }
@@ -116,7 +115,7 @@ void customer_screen(char cus_id[ID_PASS_MAX])
             }
 
             default:
-            {printf("%s\t\t\t\tInvalid option%s\n", RED_TEXT,RESET_TEXT); usleep(3000000); system("clear");
+            {printf("%s\t\t\t\tInvalid option%s\n", RED_TEXT,RESET_TEXT); usleep(3000000); system("cls");
             goto t;}
         }
 }
@@ -127,7 +126,7 @@ void reg()
     loading();
 
 rereg:
-    system("clear");
+    system("cls");
     printf("\t\t\t\t\t\t\t%sREGISTER%s\t\t\t\n\n", BCYN, RESET_TEXT);
     printf("\t\t\t\t%sSelect account type: %s\n\n\t\t\t\t(1) Customer\n\t\t\t\t(2) Driver\n\t\t\t\t(3) Exit%s\n", YELLOW_TEXT, BLUE_TEXT, RESET_TEXT);
     int choice;
@@ -138,7 +137,7 @@ rereg:
 
     if (choice == 1)
     {
-        system("clear");
+        system("cls");
         FILE *cfile = fopen("log_customer.csv", "a+");
     regC:
 
@@ -163,7 +162,7 @@ rereg:
 
         int exists = 0;
 
-        system("clear");
+        system("cls");
         while (fscanf(cfile, "%49[^|]|%19[^|]|%19[^\n]\n", check_c.name, check_c.clogin.id, check_c.clogin.pass) != EOF)
         {
             if (strcmp(check_c.clogin.id, add_c.clogin.id) == 0)
@@ -219,7 +218,7 @@ rereg:
         }
         int exists = 0;
 
-        system("clear");
+        system("cls");
         while (fscanf(dfile, "%49[^|]|%19[^|]|%19[^\n]\n", check_d.name, check_d.dlogin.id, check_d.dlogin.pass) != EOF)
         {
             if (strcmp(check_d.dlogin.id, add_d.dlogin.id) == 0)
@@ -262,7 +261,7 @@ void loginf()
 {
     loading();
     int pass_attempts = 3;
-relogin: system("clear");
+relogin: system("cls");
     pass_attempts = 3;
 
     printf("\t\t\t\t\t\t\t%sLOG IN%s\n\n", BCYN, RESET_TEXT);
@@ -272,7 +271,7 @@ relogin: system("clear");
     enter(">>>", 4);
     printf("%s", RESET_TEXT);
     scanf("%d", &choice);
-    system("clear");
+    system("cls");
 
     if (choice == 1)
     {
@@ -297,7 +296,7 @@ relogin: system("clear");
 
                     scanf("%s", check_c.clogin.pass);
                     pass_attempts--;
-                    system("clear");
+                    system("cls");
                     if (strcmp(add_c.clogin.pass, check_c.clogin.pass) == 0)
                     {
                         printf("\n\t\t\t\t%sKindly wait while we fetch your account%s", YELLOW_TEXT, RESET_TEXT);
@@ -311,7 +310,7 @@ relogin: system("clear");
                     {
                         printf("\n\t\t\t\t%sIncorrect password.%s\n\t\t\t\t%d attempts left.\n", RED_TEXT, RESET_TEXT, pass_attempts);
                         usleep(1500000);
-                        system("clear");
+                        system("cls");
                         goto tryPass_C;
                     }
                 }
@@ -324,7 +323,7 @@ relogin: system("clear");
                     {
                         printf("Account temporarily disabled, wait for %d seconds", i);
                         usleep(1000000);
-                        system("clear");
+                        system("cls");
                     }
                     pass_attempts = 3;
                     goto tryPass_C;
@@ -335,7 +334,7 @@ relogin: system("clear");
         {
             printf("\t\t\t\t%sINVALID CHOICE%s\n", RED_TEXT, RESET_TEXT);
             usleep(2000000);
-            system("clear");
+            system("cls");
             goto relogin;
         }
     }
@@ -362,7 +361,7 @@ relogin: system("clear");
 
                     scanf("%s", check_d.dlogin.pass);
                     pass_attempts--;
-                    system("clear");
+                    system("cls");
                     if (strcmp(add_d.dlogin.pass, check_d.dlogin.pass) == 0)
                     {
                         printf("\n\t\t\t\t%sKindly wait while we fetch your account%s", YELLOW_TEXT, RESET_TEXT);
@@ -374,7 +373,7 @@ relogin: system("clear");
                     {
                         printf("\n\t\t\t\t%sIncorrect password.%s\n\t\t\t\t%d attempts left.", RED_TEXT, RESET_TEXT, pass_attempts);
                         usleep(1500000);
-                        system("clear");
+                        system("cls");
                         goto tryPass_D;
                     }
                 }
@@ -384,7 +383,7 @@ relogin: system("clear");
                     {
                         printf("Account temporarily disabled, wait for %d seconds", i);
                         usleep(1000000);
-                        system("clear");
+                        system("cls");
                     }
                     pass_attempts = 3;
                     goto tryPass_D;
@@ -395,7 +394,7 @@ relogin: system("clear");
         {
             printf("\t\t\t\t%sINVALID CHOICE%s\n", RED_TEXT, RESET_TEXT);
             usleep(2000000);
-            system("clear");
+            system("cls");
             goto relogin;
         }
     }
@@ -407,7 +406,7 @@ relogin: system("clear");
     {
         printf("\t\t\t\t%sINVALID CHOICE%s\n", RED_TEXT, RESET_TEXT);
         usleep(2000000);
-        system("clear");
+        system("cls");
         goto relogin;
     }
 }
@@ -415,12 +414,12 @@ relogin: system("clear");
 
 int main()
 {
-    system("clear");
+    system("cls");
 
     int ab = 0;
 strt:
     rerun = 0;
-    system("clear");
+    system("cls");
     printf("\t\t\t\t\t\t%sTRANSPORT MANAGEMENT SYSTEM%s\n\n", BWHT, RESET_TEXT);
     printf("\t\t\t\t%s1. Log In Account\n\n\t\t\t\t2. Register New Account\n\n\t\t\t\t3. About\n\n\t\t\t\t4. Admin Login\n\n\t\t\t\t%s", CYAN_TEXT, GREEN_TEXT);
     enter("Enter Choice : ", 4);
@@ -450,7 +449,7 @@ strt:
 
     case 3:
     {
-        system("clear");
+        system("cls");
         printf("%s", BYEL);
         char credits[1000] = "\t\t\t\tEnd-Sem Project ||\t\t\t\tAaditya Sharma |\t\t\t\tUnmilan Das |\t\t\t\tPathya Taya |\t\t\t\tSwastik Mantri |\t\t\t\tSuvansh Sharma|";
         int key = 0;
@@ -480,7 +479,7 @@ strt:
     case 4:
     {
         int pass_attempts = 3;
-        system("clear");
+        system("cls");
         char admin_key[50];
     adminTry:
         if (pass_attempts > 0)
@@ -498,7 +497,7 @@ strt:
             {
                 printf("\n\t\t\t\tIncorrect key.\n\t\t\t\t%d attempts left.", pass_attempts);
                 usleep(1500000);
-                system("clear");
+                system("cls");
                 goto adminTry;
             }
         }
@@ -508,7 +507,7 @@ strt:
             {
                 printf("Account temporarily disabled, redirecting to main menu in %d seconds", i);
                 usleep(1000000);
-                system("clear");
+                system("cls");
             }
             goto strt;
             //  main();

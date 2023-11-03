@@ -77,7 +77,7 @@ void add_order(char cus_id[ID_PASS_MAX])
     
     //Customer order id is taken as 1 greater than index
     record.customer_order_id=index+1;
-    fprintf(ptr1,"%d|%s|%s|%d|%s|%s\n",record.customer_order_id,add_o.pick_loc,add_o.item,add_o.quantity,add_o.del_dest, record.customer_ID);
+    fprintf(ptr1,"%d|%s|%s|%d|%s|%s",record.customer_order_id,add_o.pick_loc,add_o.item,add_o.quantity,add_o.del_dest, record.customer_ID);
     fprintf(ptr1,"\n");
     printf("\n\t\t\t\tPlacing Order, Kindly wait\n\t\t\t\t");
     loading();

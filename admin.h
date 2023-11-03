@@ -36,17 +36,17 @@ void delDriver(const char *filename, const char *nameToDelete)
     char driverName[100];    // Adjust buffer size based on the expected driver name length
     char vehicleNumber[100]; // Adjust buffer size based on the expected vehicle number length
     char driverID[100];
+    char y[2];
     int found = 0;
 
-    while (fscanf(inputFile, " %99[^|]|%99[^|]|%99[^|\n]\n",driverID, driverName, vehicleNumber) != EOF)
+    while (fscanf(inputFile, " %99[^|]|%99[^|]|%99[^|]|%2[^\n]\n",driverID, driverName, vehicleNumber,y) != EOF)
     {
-        if (strcmp(driverName, nameToDelete) == 0)
+        if (strcmp(driverID, nameToDelete) == 0)
         {
-            found = 1;
-            continue; // Skip this line (record to be deleted)
+            found = 1; // Skip this line (record to be deleted)
         }
-
-        fprintf(tempFile, "%s|%s|%s\n",driverID, driverName, vehicleNumber); // Write the line back to the temporary file
+        else
+        fprintf(tempFile, "%s|%s|%s|%s\n",driverID, driverName, vehicleNumber,y); // Write the line back to the temporary file
     }
 
     fclose(inputFile);
@@ -143,7 +143,7 @@ void admin()
         {
             int ch;
             printf("\t\t\t\t1. Vehicle details\n\t\t\t\t2. Driver details\n");
-            printf("\t\t\t\tEnter choice :\n>>>");
+            printf("\t\t\t\tEnter choice \t\t\t\t\n>>>");
             scanf("%d", &ch);
             system("cls");
             FILE *file, *fp;
@@ -279,7 +279,7 @@ void admin()
                 break;
             default:
                 clear_leftover();
-                printf("\t\t\t\tWrong choice...\n");
+                printf("\t\t\t\tINVALID CHOICE\n");
                 printf("\t\t\t\tPress enter to continue");
                 scanf("%c", &k);
                 break;
@@ -289,6 +289,7 @@ void admin()
         {
 
             int ch;
+            char x[2];
             printf("\t\t\t\t1. Vehicle details\n\t\t\t\t2. Driver details\n\t\t\t\t3. Order details\n");
             printf("\t\t\t\tEnter choice :\n\t\t\t\t>>>");
             scanf("%d", &ch);
@@ -329,12 +330,12 @@ void admin()
 
                 else
                 {
-                    printf("Driver ID\t\tDriver name\t\tCurrent Vehicle\n");
+                    printf("Driver ID\t\tDriver name\t\tCurrent Vehicle\t\tOrder Number\n");
 
                     // Read and print each line from the CSV file
-                    while (fscanf(fp, "%19[^|]|%49[^|]|%19[^\n]\n",read_d.dlogin.id, read_d.name, read_d.curr_veh.vehicleNumber) != EOF)
+                    while (fscanf(fp, "%19[^|]|%49[^|]|%19[^|]|%2[^\n]\n",read_d.dlogin.id, read_d.name, read_d.curr_veh.vehicleNumber,x) != EOF)
                     {
-                        printf("%-15s\t%12s\t%10s\n",read_d.dlogin.id, read_d.name, read_d.curr_veh.vehicleNumber);
+                        printf("%-15s\t%15s\t%20s\t%17s\n",read_d.dlogin.id, read_d.name, read_d.curr_veh.vehicleNumber,x);
                     }
                 }
                 clear_leftover();
@@ -351,12 +352,12 @@ void admin()
 
                 else
                 {
-                    printf("Customer order ID\tPick up location\tItem\tDestination\tQuantity\tCustomer ID\n");
+                    printf("Customer order ID\tPick up location\tItem\tQuantity\tDestination\tCustomer ID\n");
 
                     // Read and print each line from the CSV file
                     while (fscanf(fp, "%d|%99[^|]|%99[^|]|%d|%99[^|]|%99[^\n]\n", &read_co.customer_order_id, read_co.pickup, read_co.item,&read_co.quantity,read_co.destination,read_co.customer_ID) != EOF)
                     {
-                        printf("%d\t%s\t%-10s\t%d\t%-19s\t%s\n",read_co.customer_order_id, read_co.pickup, read_co.item,read_co.quantity,read_co.destination,read_co.customer_ID);
+                        printf("%-17d\t%-16s\t%s\t%-15d\t%-12s\t%11s\n",read_co.customer_order_id, read_co.pickup, read_co.item,read_co.quantity,read_co.destination,read_co.customer_ID);
                     }
                 }
                 clear_leftover();
@@ -365,7 +366,7 @@ void admin()
                 break;
 
             default:
-                printf("\t\t\t\tWrong choice...\n");
+                printf("\t\t\t\tINVALID CHOICE\n");
                 clear_leftover();
                 printf("\t\t\t\tPress enter to continue");
                 scanf("%c", &k);
@@ -375,7 +376,8 @@ void admin()
         if (ch1 == 3)
         {
             int ch;
-            printf("\t\t\t\t1. Vehicle details\n\t\t\t\t2. Driver details\n\t\t\t\t3. Order details\n");
+            char x[2];
+            printf("\t\t\t\t1. Vehicle details\n\t\t\t\t2. Driver details\n");
             printf("\t\t\t\tEnter choice :\n\t\t\t\t>>>");
             scanf("%d", &ch);
             system("cls");
@@ -423,19 +425,22 @@ void admin()
 
                 else
                 {
-                    printf("Customer name\tPick up location\tDelivery destination\n");
+                    printf("Driver ID\t\tDriver name\t\tCurrent Vehicle\t\tOrder Number\n");
 
                     // Read and print each line from the CSV file
-                    while (fscanf(file, "%99[^|]|%99[^|]|%99[^\n]\n", read_o.cus.name, read_o.pick_loc, read_o.del_dest) != EOF)
+                    while (fscanf(file, "%19[^|]|%49[^|]|%19[^|]|%2[^\n]\n",read_d.dlogin.id, read_d.name, read_d.curr_veh.vehicleNumber,x) != EOF)
                     {
-                        printf("%-10s\t%-19s\t%s\n", read_o.cus.name, read_o.pick_loc, read_o.del_dest);
+                        printf("%-15s\t%15s\t%20s\t%17s\n",read_d.dlogin.id, read_d.name, read_d.curr_veh.vehicleNumber,x);
                     }
                     fclose(file);
 
                     clear_leftover();
-                    printf("\t\t\t\tEnter driver name to be deleted: ");
+                    printf("\t\t\t\tEnter driver ID to be deleted: ");
                     fgets(del_d.name, 100, stdin);
                     remove_endline(del_d.name);
+
+                    delDriver(filename, del_d.name);
+                
 
                     printf("\t\t\t\tDriver not in list\n");
                 }
@@ -444,8 +449,13 @@ void admin()
                 scanf("%c", &k);
                 break;
             default:
+                printf("INVALID CHOICE");
+                clear_leftover();
+                printf("\t\t\t\tPress enter to continue");
+                scanf("%c", &k);
                 break;
             }
+            
         }
         else
         {
