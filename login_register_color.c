@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include "customer.h"
+#include "driver.h"
 #include "admin_login_details.h"
 #define ID_PASS_MAX 20
 int rerun = 0;
@@ -330,8 +330,8 @@ relogin:
                     {
                         printf("\n\t\t\t\t%sKindly wait while we fetch your account%s", YELLOW_TEXT, RESET_TEXT);
                         loading();
-                        printf("Under construction.");
                         fclose(dfile);
+                        driver_login(add_d.dlogin.id);
                     }
                     else
                     {

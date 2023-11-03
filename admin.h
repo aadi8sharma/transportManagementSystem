@@ -461,23 +461,25 @@ void admin()
 void assign_order(int order_ID)
 {
     FILE* ddetails = fopen("driver_details.csv", "r+");
-    FILE* temp = fopen("Temp.csv","w");
-    char buffer[100];
-    char id_[100],name_[100];
-    int vechileno_,orderid_;
-    while (fgets(buffer,100,ddetails)!=NULL)
+    FILE* temp = fopen("Temp.csv","a+");
+    char id_[20], name_[50], vehicleno_[20];
+    int orderid_;
+    while (fscanf(ddetails,"%19[^|]|%49[^|]|%19[^|]|%d\n",id_,name_,vehicleno_,&orderid_)!=EOF)
     {
-        buffer[strlen(buffer)-1]='\0';
-        sscanf(buffer,"%99[^|]|%99[^|]|%d|%d\n",id_,name_,&vechileno_,&orderid_);
-        if (orderid_==0)
+        if (orderid_== 0)
         {
             orderid_=order_ID;
-            fprintf(temp,"%s|%s|%d|%d",id_,name_,vechileno_,orderid_);
+            fprintf(temp,"%s|%s|%s|%d\n",id_,name_,vehicleno_,orderid_);
+            break;
         }
         else
         {
-            fprintf(temp, "%s\n", buffer);
+            fprintf(temp,"%s|%s|%s|%d\n",id_,name_,vehicleno_,orderid_);
         }
+    }
+    while(fscanf(ddetails,"%19[^|]|%49[^|]|%19[^|]|%d\n",id_,name_,vehicleno_,&orderid_)!=EOF)
+    {
+        fprintf(temp,"%s|%s|%s|%d\n",id_,name_,vehicleno_,orderid_);
     }
     fclose(ddetails);
     fclose(temp);
