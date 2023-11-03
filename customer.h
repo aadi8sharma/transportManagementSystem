@@ -105,7 +105,7 @@ void view_orders(char cus_id[ID_PASS_MAX])
 
 void view_order(char index[2000])
 {
-    FILE *ptr=fopen("File.csv","r");
+    FILE *ptr=fopen("orders.csv","r+");
     char ch;
     int chk=0;
     while ((ch=fgetc(ptr))!=EOF)
@@ -113,7 +113,7 @@ void view_order(char index[2000])
         if (ch=='\n')
         {
             char ch2[2000];
-            fscanf(ptr,"%s",ch2);
+            fscanf(ptr,"%[^|]",ch2);
             printf("\n\t\t\t\t");
             if (strcmp(index,ch2)==0)
             {
@@ -133,7 +133,7 @@ void view_order(char index[2000])
     {
         char ch2[2000];
         fseek(ptr,0,SEEK_SET);
-        fscanf(ptr,"%s",ch2);
+        fscanf(ptr,"%[^|]",ch2);
         if (strcmp(index,ch2)==0)
         {
             printf("%s",ch2);
