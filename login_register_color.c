@@ -1,30 +1,42 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include "driver.h"
+#include "customer.h"
 #include "admin_login_details.h"
 #define ID_PASS_MAX 20
 int rerun = 0;
+//#define cls 'clear';
 
 void customer_screen(char cus_id[ID_PASS_MAX])
 {
     
         system("clear");
-        t:
-        FILE* f = fopen("log_customer.csv", "r+");
+        t: system("clear");
+     FILE* f = fopen("log_customer.csv", "r+");
+        // FILE* f = fopen("log_customer.csv", "r+");
         while(fscanf(f, "%49[^|]|%19[^|]|%19[^\n]\n", read_c.name, read_c.clogin.id, read_c.clogin.pass) != EOF)
+        // while(fscanf(f, "%49[^|]|%19[^|]|%19[^\n]\n", read_c.name, read_c.clogin.id, read_c.clogin.pass) != EOF)
         {
+        // {
             if(strcmp(read_c.clogin.id, cus_id) == 0)
+        //     if(strcmp(read_c.clogin.id, cus_id) == 0)
             {
+        //     {
                 break;
+        //         break;
             }
+        //     }
         }
+        // }
         printf("\n\t\t\t\t\t\t\t%s%s's Account%s\n\n", BCYN, read_c.name, RESET_TEXT);
         printf("\n\n\t\t\t\t%s(1) Place Order\n", CYAN_TEXT);
         printf("\n\t\t\t\t(2) Order History\n");
         printf("\n\t\t\t\t(3) Find Order\n");
-        printf("\n\t\t\t\t(4) Delete Record\n%s", RESET_TEXT);
-        fclose(f);
+        printf("\n\t\t\t\t(4) Delete Record\n\n\t\t\t\t(5) Logout%s\n", GREEN_TEXT);
+        
+        enter(">>>", 4);
+        printf("%s", RESET_TEXT);
+       // fclose(f);
         int choice;
         scanf("%d",&choice);
         switch (choice)
@@ -32,55 +44,79 @@ void customer_screen(char cus_id[ID_PASS_MAX])
             case 1:
             {  
                 add_order(cus_id);
-                printf("\nDo you want to make any other changes? If yes type 1 else type 0:");
+               printf("\n\t\t\t\t%sDo you want to make any other changes?\n\n\t\t\t\t%s(1) Yes\n\t\t\t\t(2) No %s\n",PINK_TEXT, BLUE_TEXT,GREEN_TEXT);
+               enter(">>>", 4);
+               printf("%s",RESET_TEXT);
                 int choice1;
                 scanf("%d",&choice1);
                 if (choice1==1)
                 goto t;
+                else { system("clear");
+                printf("\n\t\t\t\t%sGOODBYE!", BWHT); }
                 break;
             }
             case 2:
             {
                 view_orders(cus_id);
-                printf("\nDo you want to make any other changes? If yes type 1 else type 0:");
+               printf("\n\t\t\t\t%sDo you want to make any other changes?\n\n\t\t\t\t%s(1) Yes\n\t\t\t\t(2) No %s\n",PINK_TEXT, BLUE_TEXT,GREEN_TEXT);
+               enter(">>>", 4);
+               printf("%s",RESET_TEXT);
                 int choice1;
                 scanf("%d",&choice1);
                 if (choice1==1)
                 goto t;
+                else { system("clear");
+                printf("\n\t\t\t\t%sGOODBYE!", BWHT); }
                 break;
             }
             case 3:
             {
                 char n[2000];
-                printf("Enter customer order id to be searched for:");
+                system("clear");
+                printf("\n\t\t\t\t%sEnter customer order id to be searched for : %s", YELLOW_TEXT,RESET_TEXT);
                 while (getchar()!='\n');
 
                 fgets(n,2000,stdin);
                 if (n[strlen(n)-1]=='\n')
                 n[strlen(n)-1]='\0';
                 view_order(n);
-                printf("\nDo you want to make any other changes? If yes type 1 else type 0:");
+
+               printf("\n\t\t\t\t%sDo you want to make any other changes?\n\n\t\t\t\t%s(1) Yes\n\t\t\t\t(2) No %s\n",PINK_TEXT, BLUE_TEXT,GREEN_TEXT);
+               enter(">>>", 4);
+               printf("%s",RESET_TEXT);
                 int choice1;
                 scanf("%d",&choice1);
                 if (choice1==1)
                 goto t;
+                else { system("clear");
+                printf("\n\t\t\t\t%sGOODBYE!", BWHT); }
                 break;
             }
             case 4:
             {
                 int index;
-                printf("Enter the customer order id of the line to be deleted:");
+                printf("\n\t\t\t\tEnter the customer order id to be deleted : ");
                 scanf("%d",&index);
                 deleteOrderByOrderNumber(index);
-                printf("\nDo you want to make any other changes? If yes type 1 else type 0:");
+
+                printf("\n\t\t\t\t%sDo you want to make any other changes?\n\n\t\t\t\t%s(1) Yes\n\t\t\t\t(2) No %s\n",PINK_TEXT, BLUE_TEXT,GREEN_TEXT);
+               enter(">>>", 4);
+               printf("%s",RESET_TEXT);
                 int choice1;
                 scanf("%d",&choice1);
                 if (choice1==1)
                 goto t;
+                else { system("clear");
+                printf("\n\t\t\t\t%sGOODBYE!", BWHT); }
                 break;
             }
+            case 5:
+            {  rerun=1;
+                break;
+            }
+
             default:
-            {printf("Invalid option chosen\n");
+            {printf("%s\t\t\t\tInvalid option%s\n", RED_TEXT,RESET_TEXT); usleep(3000000); system("clear");
             goto t;}
         }
 }
@@ -226,7 +262,7 @@ void loginf()
 {
     loading();
     int pass_attempts = 3;
-relogin:
+relogin: system("clear");
     pass_attempts = 3;
 
     printf("\t\t\t\t\t\t\t%sLOG IN%s\n\n", BCYN, RESET_TEXT);
@@ -268,6 +304,7 @@ relogin:
                         loading();
                         fclose(cfile);
                         customer_screen(add_c.clogin.id);
+                        if (rerun==1) {goto relogin;}
                         
                     }
                     else
