@@ -4,7 +4,7 @@
 #include "admin.h"
 
 void add_order(char cus_id[ID_PASS_MAX])
-{    
+{    system("Clear");
     FILE *ptr1;
     ptr1=fopen("orders.csv","a+");
     if (ptr1==NULL)
@@ -50,22 +50,26 @@ void add_order(char cus_id[ID_PASS_MAX])
 
     char item[100],destination[100],pickup[100];
     //Input of the pickup location
-    printf("Enter the pickup location:");
+    
+    enter("Order Pickup Location : ", 4);
+
     fgets(add_o.pick_loc,100,stdin);
     //Used to remove the \n inputed during entering of the "pickup" string
     if (add_o.pick_loc[strlen(add_o.pick_loc)-1]=='\n')
     add_o.pick_loc[strlen(add_o.pick_loc)-1]='\0';
     //Input of items to be ordered
-    printf("Enter the item to be ordered:");
+
+   // printf("Enter the item to be ordered:");
+   enter("Order Item : ", 4);
     fgets(add_o.item,100,stdin);
     if (add_o.item[strlen(add_o.item)-1]=='\n')
     add_o.item[strlen(add_o.item)-1]='\0';
     //Input of quantity of items to be ordered
-    printf("Enter the quantity of the item:");
+    enter("Quantity : ", 4);
 
     scanf("%d",&add_o.quantity); 
     //Input of destination of the order
-    printf("Enter the destination:");
+    enter("Destination : ", 4);
     while ((getchar()) != '\n');
     fgets(add_o.del_dest,100,stdin);
     if (add_o.del_dest[strlen(add_o.del_dest)-1]=='\n')
@@ -75,8 +79,8 @@ void add_order(char cus_id[ID_PASS_MAX])
     record.customer_order_id=index+1;
     fprintf(ptr1,"%d|%s|%s|%d|%s|%s",record.customer_order_id,add_o.pick_loc,add_o.item,add_o.quantity,add_o.del_dest, record.customer_ID);
     fprintf(ptr1,"\n");
-    printf("\nOrder has been placed!\n");
-
+    printf("\n\t\t\t\tPlacing Order, Kindly wait\n\t\t\t\t");
+    loading();
     fclose(ptr1);
     assign_order(record.customer_order_id);
     }
@@ -85,21 +89,23 @@ void add_order(char cus_id[ID_PASS_MAX])
 void view_orders(char cus_id[ID_PASS_MAX])
 {
     FILE *ptr=fopen("orders.csv","r+");
-    system("cls");
-    printf("\n\t\t\t\t\t\t\tYOUR ORDERS");
+    system("clear");
+    printf("\n\t\t\t\t\t\t\t%sYOUR ORDERS%s", BCYN,RESET_TEXT);
     printf("\n\n\tOrder ID\t\tPickup Location\t\tItem Name\t\tQuantity\t\tDestination\n\n");
     while(fscanf(ptr, "%d|%99[^|]|%99[^|]|%d|%99[^|]|%19[^\n]\n", &read_co.customer_order_id, read_co.pickup, read_co.item, &read_co.quantity, read_co.destination, read_co.customer_ID) != EOF)
     {
         if(strcmp(cus_id, read_co.customer_ID) == 0)
         {
-            printf("\t%d\t\t%s\t\t%s\t\t%d\t\t%s\n", read_co.customer_order_id, read_co.pickup, read_co.item, read_co.quantity, read_co.destination);
+            printf("\n\t%-15d\t\t%15s\t\t%8s\t\t%9d\t\t%10s\n", read_co.customer_order_id, read_co.pickup, read_co.item, read_co.quantity, read_co.destination);
+        
+        
         }
     }
 }
 
 void view_order(char index[2000])
 {
-    FILE *ptr=fopen("File.csv","r");
+    FILE *ptr=fopen("orders.csv","r+");
     char ch;
     int chk=0;
     while ((ch=fgetc(ptr))!=EOF)
@@ -107,7 +113,8 @@ void view_order(char index[2000])
         if (ch=='\n')
         {
             char ch2[2000];
-            fscanf(ptr,"%s",ch2);
+            fscanf(ptr,"%[^|]",ch2);
+            printf("\n\t\t\t\t");
             if (strcmp(index,ch2)==0)
             {
                 ch=fgetc(ptr);
@@ -126,7 +133,7 @@ void view_order(char index[2000])
     {
         char ch2[2000];
         fseek(ptr,0,SEEK_SET);
-        fscanf(ptr,"%s",ch2);
+        fscanf(ptr,"%[^|]",ch2);
         if (strcmp(index,ch2)==0)
         {
             printf("%s",ch2);
@@ -172,12 +179,10 @@ void deleteOrderByOrderNumber(int orderNumber) {
     fclose(tempFile);
 
     if (found == 0) {
-        printf("Order number not found in the file.\n");
+        printf("\n\t\t\t\tOrder number not found in the file.\n");
     } else {
         remove("orders.csv"); // Delete the original file
         rename("Temp.csv", "orders.csv"); // Rename the temp file to the original file
-        printf("Order successfully deleted.\n");
+        printf("\n\t\t\t\t%sOrder successfully deleted.%s\n", GREEN_TEXT,RESET_TEXT);
     }
 }
-
-

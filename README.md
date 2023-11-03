@@ -1,13 +1,21 @@
+                                            Indian Institute of Technology Bhubaneswar
+                                            Programming and Data Structures (CS01L001)
+                                                        Capstone Project
+
+Transport Management System
 # transportManagementSystem
-PDS Project
 
-Note:
+An interface that handles CSV files to allow customers, drivers, and administrators to manage orders and their delivery.
 
--> Use 7 tab spaces before heading.
--> Use 4 tab spaces before other texts.
--> Read structure.h file, suggest me changes if required.
--> Include structure.h and loading.h in your C file.
--> Add names of CSV files (and their use) that you have created, for others to use it in their code, you may add them in the repo later:
+Admin Log In:
+  1. Enables administrators to add and delete details related to vehicles and drivers.
+  2. View vehicle and driver details.
+  3. Assign orders to drivers based on the availability of drivers.
 
+Consumer Log In:
+  1. Let the consumer place an order.
+  2. View the details of existing orders.
 
-KAAM KARLO BHOSDIWALO
+Driver Log In:
+  1. Enables driver to view details of order assigned to them, including pickup location, destination, item ordered and its quantity.
+
