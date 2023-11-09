@@ -37,10 +37,10 @@ void delDriver(const char *filename, const char *nameToDelete)
     char driverName[100];    // Adjust buffer size based on the expected driver name length
     char vehicleNumber[100]; // Adjust buffer size based on the expected vehicle number length
     char driverID[100];
-    char y[2];
+    char y[10];
     int found = 0;
 
-    while (fscanf(inputFile, " %99[^|]|%99[^|]|%99[^|]|%2[^\n]\n",driverID, driverName, vehicleNumber,y) != EOF)
+    while (fscanf(inputFile, " %19[^|]|%49[^|]|%19[^|]|%9[^\n]\n",driverID, driverName, vehicleNumber,y) != EOF)
     {
         if (strcmp(driverID, nameToDelete) == 0)
         {
@@ -246,12 +246,12 @@ void admin()
                             break;
 
                         }
-                        printf("\n\t\t\t\tVehicle Number\n");
+                        printf("\nVehicle Number\n");
 
                         // Read and print each line from the CSV file
                         while (fscanf(fp, "%19[^|]\n", viewVehicle.vehicleNumber) != EOF)
                         {
-                            printf("\t\t\t\t%s\n\n", viewVehicle.vehicleNumber);
+                            printf("%s\n\n", viewVehicle.vehicleNumber);
                         }
                         fclose(fp);
 
@@ -279,7 +279,7 @@ void admin()
                         {
 
                             // Write the details to the CSV file
-                            fprintf(file, "%s|%s|%s|%d\n",check_d.dlogin.id,add_d.name, add_d.curr_veh.vehicleNumber, NULL);
+                            fprintf(file, "%s|%s|%s|%d\n",check_d.dlogin.id,add_d.name, add_d.curr_veh.vehicleNumber, 0);
 
                             // Close the file
                             fclose(file);
@@ -304,7 +304,7 @@ void admin()
         }
         else if (ch1 == 2)
         {
-            char x[2];
+            char x[10];
             int ch;
             vieword:
             system("clear");
@@ -356,9 +356,9 @@ void admin()
                     printf("Driver ID\t\tDriver name\t\tCurrent Vehicle\t\tOrder Number\n");
 
                     // Read and print each line from the CSV file
-                     while (fscanf(fp, "%19[^|]|%49[^|]|%19[^|]|%2[^\n]\n",read_d.dlogin.id, read_d.name, read_d.curr_veh.vehicleNumber,x) != EOF)
+                     while (fscanf(fp, "%19[^|]|%49[^|]|%19[^|]|%9[^\n]\n",read_d.dlogin.id, read_d.name, read_d.curr_veh.vehicleNumber,x) != EOF)
                     {
-                        printf("%-15s\t%15s\t%20s\t%17s\n",read_d.dlogin.id, read_d.name, read_d.curr_veh.vehicleNumber,x);
+                        printf("%-15s\t%19s\t%23s\t%17s\n",read_d.dlogin.id, read_d.name, read_d.curr_veh.vehicleNumber,x);
                     }
                 }
                 clear_leftover();
@@ -375,12 +375,14 @@ void admin()
 
                 else
                 {
-                    printf("Customer order ID\tPick up location\tItem\tDestination\tQuantity\tCustomer ID\n");
+                    printf("Customer order ID\tPick up location\tItem\t\tQuantity\tDestination\tCustomer ID\n");
 
                     // Read and print each line from the CSV file
-                    while (fscanf(fp, "%d|%99[^|]|%99[^|]|%d|%99[^|]|%99[^\n]\n", &read_co.customer_order_id, read_co.pickup, read_co.item,&read_co.quantity,read_co.destination,read_co.customer_ID) != EOF)
+                    while (fscanf(fp, "%d|%99[^|]|%99[^|]|%d|%99[^|]|%19[^\n]\n", &read_co.customer_order_id, read_co.pickup, read_co.item,&read_co.quantity,read_co.destination,read_co.customer_ID) != EOF)
                     {
-                        printf("%d\t%s\t%-10s\t%d\t%-19s\t%s\n",read_co.customer_order_id, read_co.pickup, read_co.item,read_co.quantity,read_co.destination,read_co.customer_ID);
+                      printf("%-17d\t%-16s\t%s\t%-15d\t%-12s\t%11s\n",read_co.customer_order_id, read_co.pickup, read_co.item,read_co.quantity,read_co.destination,read_co.customer_ID);
+
+                      //  printf("%d\t%s\t%-10s\t%d\t%-19s\t%s\n",read_co.customer_order_id, read_co.pickup, read_co.item,read_co.quantity,read_co.destination,read_co.customer_ID);
                     }
                 }
                 clear_leftover();
@@ -398,7 +400,7 @@ void admin()
         }
         else if (ch1 == 3)
         {
-            char x[2];
+            char x[10];
             int ch;
             printf("%s\t\t\t\t1. Vehicle details\n\t\t\t\t2. Driver details\n\n%s",BLUE_TEXT,GREEN_TEXT);
          
@@ -452,9 +454,9 @@ void admin()
                     printf("Driver ID\t\tDriver name\t\tCurrent Vehicle\t\tOrder Number\n");
 
                     // Read and print each line from the CSV file
-                    while (fscanf(file, "%19[^|]|%49[^|]|%19[^|]|%2[^\n]\n",read_d.dlogin.id, read_d.name, read_d.curr_veh.vehicleNumber,x) != EOF)
+                    while (fscanf(file, "%19[^|]|%49[^|]|%19[^|]|%9[^\n]\n",read_d.dlogin.id, read_d.name, read_d.curr_veh.vehicleNumber,x) != EOF)
                     {
-                        printf("%-15s\t%15s\t%20s\t%17s\n",read_d.dlogin.id, read_d.name, read_d.curr_veh.vehicleNumber,x);
+                        printf("%-15s\t%19s\t%23s\t%17s\n",read_d.dlogin.id, read_d.name, read_d.curr_veh.vehicleNumber,x);
                     }
                     fclose(file);
                     
