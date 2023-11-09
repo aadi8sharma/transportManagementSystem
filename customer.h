@@ -148,7 +148,7 @@ void view_order(char index[2000])
         }
     }
     if (chk == 0)
-        printf("Invalid Customer ID entered");
+        printf("\t\t\t\t%sInvalid Customer ID entered%s", RED_TEXT,RESET_TEXT);
     fclose(ptr);
 }
 
