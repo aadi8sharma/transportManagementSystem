@@ -96,8 +96,8 @@ void view_orders(char cus_id[ID_PASS_MAX])
     {
         if(strcmp(cus_id, read_co.customer_ID) == 0)
         {
-            printf("\n\t%d\t\t%s\t\t%s\t\t%d\t\t%s\n", read_co.customer_order_id, read_co.pickup, read_co.item, read_co.quantity, read_co.destination);
-            printf("%s|      |      |      |      |      %s", UWHT,RESET_TEXT);
+            printf("\n\t%-15d\t\t%15s\t\t%8s\t\t%9d\t\t%10s\n", read_co.customer_order_id, read_co.pickup, read_co.item, read_co.quantity, read_co.destination);
+        
         
         }
     }
