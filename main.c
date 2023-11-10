@@ -451,7 +451,7 @@ strt:
     {
         system("clear");
         printf("%s", BYEL);
-        char credits[1000] = "\t\t\t\tEnd-Sem Project ||\t\t\t\tAaditya Sharma |\t\t\t\tUnmilan Das |\t\t\t\tPathya Taya |\t\t\t\tSwastik Mantri |\t\t\t\tSuvansh Sharma|";
+        char credits[1000] = "\t\t\t\tCapstone Project ||\t\t\t\tAaditya Sharma |\t\t\t\tUnmilan Das |\t\t\t\tPathya Taya |\t\t\t\tSwastik Mantri |\t\t\t\tSuvansh Sharma|";
         int key = 0;
         while (credits[key] != '\0')
         {
